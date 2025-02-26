@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 
 function Register() {
   return (
-    <div className="flex min-h-screen mt-20  p-4  items-center justify-center bg-gray-100">
+    <div className="flex min-h-screen mt-14  p-4  items-center justify-center bg-gray-100">
       <div className="w-full max-w-md rounded-lg bg-white p-8 shadow-lg">
         <h2 className="mb-6 text-start text-2xl font-bold text-gray-800">
           CREATE ACCOUNT
@@ -45,7 +45,7 @@ function Register() {
             <input
               type="password"
               className="w-full rounded-lg border border-gray-300 p-3 text-gray-700 focus:border-blue-500 focus:ring focus:ring-blue-200"
-              placeholder="Repeat your password"
+              placeholder="Confirm Password"
             />
             <span className="absolute right-3 top-3 text-gray-400 cursor-pointer">
               🔒
@@ -72,7 +72,7 @@ function Register() {
 
           <p className="mt-4 text-center text-sm text-gray-600">
             Have already an account?{" "}
-            <Link to="/" className="text-blue-500 hover:underline">
+            <Link to="/Login" className="text-blue-500 hover:underline">
               Login here
             </Link>
           </p>

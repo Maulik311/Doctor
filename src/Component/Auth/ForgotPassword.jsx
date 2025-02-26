@@ -34,7 +34,7 @@ function ForgotPassword() {
 
           <p className="mt-4 text-center text-sm text-gray-600">
             Remember your password?{" "}
-            <Link to="/" className="text-blue-500 hover:underline">
+            <Link to="/Login" className="text-blue-500 hover:underline">
               Login here
             </Link>
           </p>

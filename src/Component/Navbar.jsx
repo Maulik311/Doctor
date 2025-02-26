@@ -1,12 +1,12 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
-import img1 from "../../public/Assets/Image/navbarlogo.svg";
+import img1 from "../Image/navbarlogo.svg";
 
 function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
 
   return (
-    <nav className="bg-white shadow-md fixed w-full z-20 top-0 left-0 border-b border-gray-200">
+    <nav className=" bg-white shadow-md fixed w-full z-20 top-0 left-0 border-b border-gray-200">
       <div className="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
         <Link to="/" className="flex items-center space-x-3">
           <img src={img1} className="h-8" alt="Logo" />
@@ -52,7 +52,7 @@ function Navbar() {
           </button>
           <Link
             to="/Register"
-            className="bg-blue-600 text-white px-6 py-2 rounded-full hover:opacity-90"
+            className="bg-[#2a7fba] text-white px-6 py-2 rounded-full hover:opacity-90"
           >
             Create account
           </Link>
@@ -65,16 +65,16 @@ function Navbar() {
             HOME
           </Link>
           <Link
-            to="/doctors"
+            to="/Doctors"
             className="block text-gray-900 hover:text-blue-600"
           >
             ALL DOCTORS
           </Link>
-          <Link to="/about" className="block text-gray-900 hover:text-blue-600">
+          <Link to="/About" className="block text-gray-900 hover:text-blue-600">
             ABOUT
           </Link>
           <Link
-            to="/contact"
+            to="/Contact"
             className="block text-gray-900 hover:text-blue-600"
           >
             CONTACT
@@ -83,7 +83,7 @@ function Navbar() {
             Admin Panel
           </button>
           <Link
-            to="/signup"
+            to="/Register"
             className="block text-center bg-blue-600 text-white px-6 py-2 rounded-full hover:opacity-90"
           >
             Create account
