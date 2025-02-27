@@ -9,6 +9,18 @@ import img3 from "../Image/img3.svg";
 import img4 from "../Image/img4.svg";
 import img5 from "../Image/img5.svg";
 import img6 from "../Image/img6.svg";
+import doc1 from "../Image/Doc1.png";
+import doc2 from "../Image/Doc2.png";
+import doc3 from "../Image/Doc3.png";
+import doc4 from "../Image/Doc4.png";
+import doc5 from "../Image/Doc5.png";
+import doc6 from "../Image/Doc6.png";
+import doc7 from "../Image/Doc7.png";
+import doc8 from "../Image/Doc8.png";
+import doc9 from "../Image/Doc9.png";
+import doc10 from "../Image/Doc10.png";
+import doc11 from "../Image/Doc11.png";
+import { useNavigate } from "react-router-dom";
 
 const specialities = [
   { name: "General Physician", img: img1, bg: "bg-blue-200" },
@@ -38,69 +50,69 @@ const doctors = [
   {
     name: "Dr. Richard James",
     specialty: "General physician",
-    image: "https://via.placeholder.com/128",
+    image: doc1,
     available: true,
   },
   {
     name: "Dr. Emily Larson",
     specialty: "Gynecologist",
-    image: "https://via.placeholder.com/128",
+    image: doc2,
     available: true,
   },
   {
     name: "Dr. Sarah Patel",
     specialty: "Dermatologist",
-    image: "https://via.placeholder.com/128",
+    image: doc3,
     available: true,
   },
   {
     name: "Dr. Christopher Lee",
     specialty: "Pediatricians",
-    image: "https://via.placeholder.com/128",
+    image: doc4,
     available: true,
   },
   {
     name: "Dr. Jennifer Garcia",
     specialty: "Neurologist",
-    image: "https://via.placeholder.com/128",
+    image: doc5,
     available: true,
   },
   {
     name: "Dr. Andrew Williams",
     specialty: "Gastroenterologist",
-    image: "https://via.placeholder.com/128",
+    image: doc6,
     available: true,
   },
   {
     name: "Dr. Christopher Davis",
     specialty: "General physician",
-    image: "https://via.placeholder.com/128",
+    image: doc7,
     available: true,
   },
   {
     name: "Dr. Timothy White",
     specialty: "Gynecologist",
-    image: "https://via.placeholder.com/128",
+    image: doc8,
     available: true,
   },
   {
     name: "Dr. Ava Mitchell",
     specialty: "Dermatologist",
-    image: "https://via.placeholder.com/128",
+    image: doc9,
     available: true,
   },
   {
     name: "Dr. Jeffrey King",
     specialty: "Pediatricians",
-    image: "https://via.placeholder.com/128",
+    image: doc10,
     available: true,
   },
 ];
 
 function Home() {
+  const navigate = useNavigate();
   return (
     <>
-      {/* Hero Section */}
       <div className="container mx-auto px-4 mt-20 sm:px-6 lg:px-8 pt-12 sm:pt-20">
         <section className="bg-[#2a7fba] rounded-xl text-white py-8 sm:py-12 px-4 sm:px-6 lg:px-12 xl:px-18 flex flex-col md:flex-row items-center gap-8">
           <div className="w-full md:w-1/2 text-center md:text-left">
@@ -130,8 +142,8 @@ function Home() {
                 schedule your appointment hassle-free.
               </p>
             </div>
-            <button className="mt-6 px-6 py-3 bg-white text-[#2a7fba] font-semibold rounded-lg shadow-md hover:bg-[#dddddd] transition-colors duration-200 text-sm sm:text-base">
-              Book appointment →
+            <button className="relative bg-[#ffffff] hover:bg-[#dddddd] text-black font-semibold text-lg px-6 py-2 rounded-full transition-all duration-300 ease-in-out transform hover:scale-105 hover:shadow-md before:absolute before:top-0 before:left-[4%] before:w-[92%] before:h-1/2 before:bg-gradient-to-b before:from-white before:to-transparent before:opacity-50 before:rounded-full">
+              Bookappointment →
             </button>
           </div>
           <div className="w-full md:w-1/2 mt-6 md:mt-0">
@@ -174,7 +186,6 @@ function Home() {
         </div>
       </div>
       <div className="max-w-5xl mx-auto p-4 md:p-8">
-        {/* Title and Subtitle */}
         <div className="text-center mb-8">
           <h2 className="text-2xl md:text-3xl font-bold text-gray-800">
             Top Doctors to Book
@@ -184,7 +195,6 @@ function Home() {
           </p>
         </div>
 
-        {/* Doctors Grid */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-6">
           {doctors.map((doctor, index) => (
             <DoctorCard
@@ -197,13 +207,36 @@ function Home() {
           ))}
         </div>
 
-        {/* More Button */}
         <div className="text-center mt-8">
           <button className="px-6 py-2 bg-blue-100 text-blue-700 rounded-full font-medium hover:bg-blue-200 transition-colors">
             more
           </button>
         </div>
       </div>
+
+      <section className="bg-[#2a7fba] container mx-auto px-4 mt-20 sm:px-6 lg:px-8 pt-12 sm:pt-20 rounded-xl text-white py-8 sm:py-12 px-4 sm:px-6 lg:px-12 xl:px-18 flex flex-col md:flex-row items-center gap-8">
+        <div className="w-full md:w-1/2 text-center md:text-left">
+          <h3 className="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-bold leading-tight">
+            Book Appointment <br /> With 100+ Trusted Doctors
+          </h3>
+          <br />
+          <br />
+
+          <button
+            className="relative bg-[#ffffff] hover:bg-[#dddddd] text-black font-semibold text-lg px-6 py-2 rounded-full transition-all duration-300 ease-in-out transform hover:scale-105 hover:shadow-md before:absolute before:top-0 before:left-[4%] before:w-[92%] before:h-1/2 before:bg-gradient-to-b before:from-white before:to-transparent before:opacity-50 before:rounded-full"
+            onClick={() => navigate("/Register")}
+          >
+            Create account
+          </button>
+        </div>
+        <div className="w-full md:w-1/2 mt-6 md:mt-0 ">
+          <img
+            className="w-full max-w-[400px] h-80 mx-auto md:max-w-full object-contain"
+            src={doc11}
+            alt="Doctors"
+          />
+        </div>
+      </section>
     </>
   );
 }

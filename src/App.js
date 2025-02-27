@@ -5,7 +5,9 @@ import Register from "../src/Component/Auth/Register";
 import Login from "../src/Component/Auth/Login";
 import ForgotPassword from "../src/Component/Auth/ForgotPassword";
 import Footer from "./Component/Footer";
-import Home from "./Pages/Home";
+import Home from "../src/Pages/Home";
+import ContactUs from "./Pages/Contact";
+import About from "./Pages/About";
 
 function App() {
   return (
@@ -16,6 +18,8 @@ function App() {
         <Route path="/Register" element={<Register />} />
         <Route path="/Login" element={<Login />} />
         <Route path="/ForgotPassword" element={<ForgotPassword />} />
+        <Route path="/Contact" element={<ContactUs />} />
+        <Route path="/About" element={<About />} />
       </Routes>
       <Footer />
     </>

@@ -1,5 +1,4 @@
 import React from "react";
-import { Link } from "react-router-dom";
 import img1 from "../Image/navbarlogo.svg";
 
 function Footer() {
@@ -21,24 +20,24 @@ function Footer() {
           <h3 className="text-lg font-semibold text-gray-900 mb-3">COMPANY</h3>
           <ul className="space-y-2 text-sm">
             <li>
-              <Link to="/" className="hover:text-[#2a7fba]">
+              <p to="/" className="hover:text-[#2a7fba]">
                 Home
-              </Link>
+              </p>
             </li>
             <li>
-              <Link to="/about" className="hover:text-[#2a7fba]">
+              <p to="/about" className="hover:text-[#2a7fba]">
                 About us
-              </Link>
+              </p>
             </li>
             <li>
-              <Link to="/delivery" className="hover:text-[#2a7fba]">
+              <p to="/delivery" className="hover:text-[#2a7fba]">
                 Delivery
-              </Link>
+              </p>
             </li>
             <li>
-              <Link to="/privacy" className="hover:text-[#2a7fba]">
+              <p to="/privacy" className="hover:text-[#2a7fba]">
                 Privacy policy
-              </Link>
+              </p>
             </li>
           </ul>
         </div>
@@ -48,10 +47,10 @@ function Footer() {
             GET IN TOUCH
           </h3>
           <p className="hover:text-[#2a7fba] text-sm text-gray-600">
-            <Link to="/">+1 234-567-890</Link>
+            <p to="/">+1 234-567-890</p>
           </p>
           <p className="text-sm text-gray-600 hover:text-[#2a7fba]">
-         <Link to="/">   example002@gmail.com</Link>
+         <p to="/">   example002@gmail.com</p>
           </p>
         </div>
       </div>
