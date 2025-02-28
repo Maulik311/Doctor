@@ -3,7 +3,7 @@ import contactImage from "../Image/contact-image.png";
 
 const ContactUs = () => {
   return (
-    <section className="max-w-6xl MT-20 mx-auto py-12 px-4 md:px-8">
+    <section className="max-w-6xl mt-20 mb-20 mx-auto py-12 px-4 md:px-8">
       <h2 className="text-center text-3xl  text-gray-500 mb-8">
         CONTACT <span className="font-semibold text-gray-700">US</span>
       </h2>

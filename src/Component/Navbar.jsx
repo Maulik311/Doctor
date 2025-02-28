@@ -35,14 +35,14 @@ function Navbar() {
           <Link to="/" className=" text-gray-900 hover:text-blue-600">
             HOME
           </Link>
-          <Link to="/doctors" className="text-gray-900 hover:text-blue-600">
+          <Link to="/Alldoctor" className="text-gray-900 hover:text-blue-600">
             ALL DOCTORS
-          </Link>
-          <Link to="/about" className="text-gray-900 hover:text-blue-600">
-            ABOUT
           </Link>
           <Link to="/contact" className="text-gray-900 hover:text-blue-600">
             CONTACT
+          </Link>
+          <Link to="/about" className="text-gray-900 hover:text-blue-600">
+            ABOUT
           </Link>
         </div>
 
