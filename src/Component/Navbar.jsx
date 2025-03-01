@@ -35,7 +35,7 @@ function Navbar() {
           <Link to="/" className=" text-gray-900 hover:text-blue-600">
             HOME
           </Link>
-          <Link to="/alldoctor" className="text-gray-900 hover:text-blue-600">
+          <Link to="/AllDoctor" className="text-gray-900 hover:text-blue-600">
             ALL DOCTORS
           </Link>
           <Link to="/contact" className="text-gray-900 hover:text-blue-600">
