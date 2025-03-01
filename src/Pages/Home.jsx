@@ -215,7 +215,7 @@ function Home() {
         </div>
       </div>
 
-      <section className="bg-[#2a7fba] container mx-auto px-4 mt-20 sm:px-6 lg:px-8 pt-12 sm:pt-20 rounded-xl 1 text-white py-8 sm:py-12 px-4 sm:px-6 lg:px-12 xl:px-18 flex flex-col md:flex-row items-center gap-8">
+      <section className="bg-[#2a7fba] container mx-auto [px-4] mt-20 sm:[px-6] lg:[px-8] pt-12 sm:pt-20 rounded-xl text-white py-8 sm:py-12 px-4 sm:px-6 lg:px-12 xl:px-18 flex flex-col md:flex-row items-center gap-8">
         <div className="w-full md:w-1/2 text-center md:text-left">
           <h3 className="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-bold leading-tight">
             Book Appointment <br /> With 100+ Trusted Doctors
