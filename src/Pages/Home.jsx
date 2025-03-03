@@ -111,10 +111,11 @@ const doctors = [
 
 function Home() {
   const navigate = useNavigate();
+  navigate("/AllDoctor");
+
   return (
     <>
-      <div className="container mx-auto px-4 mt-20 sm:px-6 lg:px-8 pt-12 sm:pt-20"
-      >
+      <div className="container mx-auto px-4 mt-6 md:px-16 lg:px-10 pt-12 sm:pt-20 sm:px-10">
         <section className="bg-[#2a7fba] rounded-xl text-white py-8 sm:py-12 px-4 sm:px-6 lg:px-12 xl:px-18 flex flex-col md:flex-row items-center gap-8">
           <div className="w-full md:w-1/2 text-center md:text-left">
             <h3 className="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-bold leading-tight">
@@ -186,36 +187,34 @@ function Home() {
           ))}
         </div>
       </div>
-      <div className="max-w-5xl mx-auto p-4 md:p-8">
-        <div className="text-center mb-8">
-          <h2 className="text-2xl md:text-3xl font-bold text-gray-800">
-            Top Doctors to Book
-          </h2>
-          <p className="text-sm md:text-base text-gray-600 mt-2">
-            Simply browse through our extensive list of trusted doctors.
-          </p>
-        </div>
-
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-6">
+      <div className="container mx-auto mt-4 px-4">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-6 justify-center">
           {doctors.map((doctor, index) => (
-            <DoctorCard
+            <div
               key={index}
-              name={doctor.name}
-              specialty={doctor.specialty}
-              image={doctor.image}
-              available={doctor.available}
-            />
+              onClick={() => navigate("/Appointment", { state: { doctor } })}
+              className="cursor-pointer"
+            >
+              <DoctorCard
+                name={doctor.name}
+                specialty={doctor.specialty}
+                image={doctor.image}
+                available={doctor.available}
+              />
+            </div>
           ))}
         </div>
-
-        <div className="text-center mt-8">
-          <button className="px-6 py-2 bg-blue-100 text-blue-700 rounded-full font-medium hover:bg-blue-200 transition-colors">
-            more
-          </button>
-        </div>
+      </div>
+      <div className="text-center mt-8">
+        <button
+          className="px-6 py-2 bg-blue-100 text-[#2a7fba] rounded-full font-medium hover:bg-blue-200 transition-colors"
+          onClick={() => navigate("/AllDoctor")}
+        >
+          More
+        </button>
       </div>
 
-      <section className="bg-[#2a7fba] container mx-auto [px-4] mt-20 sm:[px-6] lg:[px-8] pt-12 sm:pt-20 rounded-xl text-white py-8 sm:py-12 px-4 sm:px-6 lg:px-12 xl:px-18 flex flex-col md:flex-row items-center gap-8">
+      <section className="bg-[#2a7fba] container mx-auto [px-4] mt-20 sm:[px-6] lg:[px-8]  pt-12 rounded-xl text-white py-8 sm:py-12 px-4 sm:px-6 lg:px-12 xl:px-18 flex flex-col md:flex-row items-center gap-8">
         <div className="w-full md:w-1/2 text-center md:text-left">
           <h3 className="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-bold leading-tight">
             Book Appointment <br /> With 100+ Trusted Doctors
@@ -225,7 +224,7 @@ function Home() {
 
           <button
             className="relative bg-[#ffffff] hover:bg-[#dddddd] text-black font-semibold text-lg px-6 py-2 rounded-full transition-all duration-300 ease-in-out transform hover:scale-105 hover:shadow-md before:absolute before:top-0 before:left-[4%] before:w-[92%] before:h-1/2 before:bg-gradient-to-b before:from-white before:to-transparent before:opacity-50 before:rounded-full"
-            onClick={() => navigate("/Register")}
+            onClick={() => navigate("/AllDoctor")}
           >
             Create account
           </button>

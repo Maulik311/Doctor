@@ -9,7 +9,7 @@ import Home from "../src/Pages/Home";
 import ContactUs from "./Pages/Contact";
 import About from "./Pages/About";
 import AllDoctor from "./Pages/AllDoctor";
-
+import Appointment from "./Context/Appointment";
 
 function App() {
   return (
@@ -23,6 +23,8 @@ function App() {
         <Route path="/Contact" element={<ContactUs />} />
         <Route path="/About" element={<About />} />
         <Route path="/AllDoctor" element={<AllDoctor />} />
+        <Route path="/Appointment" element={<Appointment />} />
+        <Route path="/appointment/:doctorId" element={<Appointment/>} />
       </Routes>
       <Footer />
     </>
