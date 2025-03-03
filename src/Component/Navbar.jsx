@@ -65,7 +65,7 @@ function Navbar() {
             HOME
           </Link>
           <Link
-            to="/Doctors"
+            to="/AllDoctor"
             className="block text-gray-900 hover:text-blue-600"
           >
             ALL DOCTORS
