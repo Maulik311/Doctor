@@ -224,7 +224,7 @@ function Home() {
 
           <button
             className="relative bg-[#ffffff] hover:bg-[#dddddd] text-black font-semibold text-lg px-6 py-2 rounded-full transition-all duration-300 ease-in-out transform hover:scale-105 hover:shadow-md before:absolute before:top-0 before:left-[4%] before:w-[92%] before:h-1/2 before:bg-gradient-to-b before:from-white before:to-transparent before:opacity-50 before:rounded-full"
-            onClick={() => navigate("/AllDoctor")}
+            onClick={() => navigate("/Register")}
           >
             Create account
           </button>
