@@ -1,5 +1,7 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { EyeIcon, EyeOffIcon } from "lucide-react";
+import Swal from "sweetalert2";
 
 function Login() {
   const [formData, setFormData] = useState({
@@ -8,6 +10,7 @@ function Login() {
   });
 
   const [error, setError] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
   const navigate = useNavigate();
 
   function handleChange(e) {
@@ -19,7 +22,6 @@ function Login() {
     let registeredUsers =
       JSON.parse(localStorage.getItem("registeredUsers")) || [];
 
-    // Check if user exists and password matches
     const validUser = registeredUsers.find(
       (user) =>
         user.email === formData.email && user.password === formData.password
@@ -27,8 +29,15 @@ function Login() {
 
     if (validUser) {
       localStorage.setItem("loggedInUser", JSON.stringify(validUser));
-      alert("Login Successful!");
-      navigate("/");
+
+      Swal.fire({
+        title: "Login Successful!",
+        text: "Welcome back!",
+        icon: "success",
+        confirmButtonText: "OK",
+      }).then(() => {
+        navigate("/");
+      });
     } else {
       setError("Invalid email or password");
     }
@@ -49,15 +58,22 @@ function Login() {
               placeholder="Email"
             />
           </div>
-          <div className="mb-2">
+          <div className="mb-2 relative">
             <input
-              type="password"
+              type={showPassword ? "text" : "password"}
               name="password"
               value={formData.password}
               onChange={handleChange}
               className="w-full p-3 border border-gray-300 rounded-lg focus:border-blue-500"
               placeholder="Password"
             />
+            <button
+              type="button"
+              onClick={() => setShowPassword(!showPassword)}
+              className="absolute right-3 top-3"
+            >
+              {showPassword ? <EyeOffIcon size={20} /> : <EyeIcon size={20} />}
+            </button>
           </div>
           <div className="mb-4 text-right">
             <button
@@ -68,7 +84,7 @@ function Login() {
               Forgot Password?
             </button>
           </div>
-          {error && <p className="text-red-500 text-sm">{error}</p>}
+          {error && <p className="text-red-500 text-sm text-center">{error}</p>}
           <button
             type="submit"
             className="w-full bg-[#2a7fba] p-3 text-white rounded-lg hover:opacity-90"

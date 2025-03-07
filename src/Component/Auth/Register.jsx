@@ -1,5 +1,7 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import { EyeIcon, EyeOffIcon } from "lucide-react";
+import Swal from "sweetalert2";
 
 function Register() {
   const [formData, setFormData] = useState({
@@ -11,6 +13,8 @@ function Register() {
   });
 
   const [error, setError] = useState({});
+  const [showPassword, setShowPassword] = useState(false);
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const navigate = useNavigate();
 
   function handleChange(e) {
@@ -39,7 +43,12 @@ function Register() {
       let registeredUsers = JSON.parse(localStorage.getItem("registeredUsers")) || [];
 
       if (registeredUsers.some((user) => user.email === formData.email)) {
-        alert("Email already registered. Please login.");
+        Swal.fire({
+          title: "Error!",
+          text: "Email already registered. Please login.",
+          icon: "error",
+          confirmButtonText: "OK",
+        });
         navigate("/Login");
         return;
       }
@@ -52,11 +61,17 @@ function Register() {
 
       registeredUsers.push(newUser);
       localStorage.setItem("registeredUsers", JSON.stringify(registeredUsers));
-
       localStorage.setItem("loggedInUser", JSON.stringify(newUser));
 
-      alert("Registration successful! Redirecting to home page...");
-      navigate("/Login"); 
+      // Success Popup
+      Swal.fire({
+        title: "Success!",
+        text: "Registration successful! Redirecting to login...",
+        icon: "success",
+        confirmButtonText: "OK",
+      }).then(() => {
+        navigate("/Login");
+      });
     }
   }
 
@@ -79,15 +94,21 @@ function Register() {
             {error.email && <p className="text-red-500 text-sm">{error.email}</p>}
           </div>
 
-          <div className="mb-4">
-            <input type="password" name="password" value={formData.password} onChange={handleChange} 
+          <div className="mb-4 relative">
+            <input type={showPassword ? "text" : "password"} name="password" value={formData.password} onChange={handleChange} 
               className="w-full rounded-lg border border-gray-300 p-3 text-gray-700 focus:border-blue-500" placeholder="Password" />
+            <button type="button" onClick={() => setShowPassword(!showPassword)} className="absolute right-3 top-3">
+              {showPassword ? <EyeOffIcon size={20} /> : <EyeIcon size={20} />}
+            </button>
             {error.password && <p className="text-red-500 text-sm">{error.password}</p>}
           </div>
 
-          <div className="mb-4">
-            <input type="password" name="confirmPassword" value={formData.confirmPassword} onChange={handleChange} 
+          <div className="mb-4 relative">
+            <input type={showConfirmPassword ? "text" : "password"} name="confirmPassword" value={formData.confirmPassword} onChange={handleChange} 
               className="w-full rounded-lg border border-gray-300 p-3 text-gray-700 focus:border-blue-500" placeholder="Confirm Password" />
+            <button type="button" onClick={() => setShowConfirmPassword(!showConfirmPassword)} className="absolute right-3 top-3">
+              {showConfirmPassword ? <EyeOffIcon size={20} /> : <EyeIcon size={20} />}
+            </button>
             {error.confirmPassword && <p className="text-red-500 text-sm">{error.confirmPassword}</p>}
           </div>
 
