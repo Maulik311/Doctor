@@ -1,11 +1,13 @@
-import React, { useRef, useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 function Login() {
-  const emailRef = useRef(null);
-  const passwordRef = useRef(null);
-  const [formData, setFormData] = useState({ email: "", password: "" });
-  const [error, setError] = useState({ email: "", password: "" });
+  const [formData, setFormData] = useState({
+    email: "",
+    password: "",
+  });
+
+  const [error, setError] = useState("");
   const navigate = useNavigate();
 
   function handleChange(e) {
@@ -14,101 +16,65 @@ function Login() {
 
   function handleSubmit(e) {
     e.preventDefault();
-    let newErrors = { email: "", password: "" };
+    let registeredUsers =
+      JSON.parse(localStorage.getItem("registeredUsers")) || [];
 
-    if (!formData.email) {
-      newErrors.email = "Email is required";
-    }
-    if (!formData.password) {
-      newErrors.password = "Password is required";
-    }
+    // Check if user exists and password matches
+    const validUser = registeredUsers.find(
+      (user) =>
+        user.email === formData.email && user.password === formData.password
+    );
 
-    setError(newErrors);
-
-    if (!formData.email) {
-      emailRef.current.focus();
-    } else if (!formData.password) {
-      passwordRef.current.focus();
+    if (validUser) {
+      localStorage.setItem("loggedInUser", JSON.stringify(validUser));
+      alert("Login Successful!");
+      navigate("/");
     } else {
-      // Store user data in localStorage
-      localStorage.setItem("loggedInUser", JSON.stringify(formData));
-
-      alert("Login successful!");
-      console.log("Login Data:", formData);
-      setFormData({ email: "", password: "" });
-      setError({ email: "", password: "" });
-
-      navigate("/"); // Redirect to home or dashboard
+      setError("Invalid email or password");
     }
   }
 
   return (
-    <div className="flex min-h-screen mt-20 p-4 items-center justify-center">
-      <div className="w-full max-w-md rounded-2xl bg-white p-8 shadow-2xl">
-        <h1 className="mb-6 text-start text-2xl font-bold text-gray-800">
-          Login
-        </h1>
-        <div className="mb-4">
-          <label className="block text-sm font-medium text-gray-600">
-            Please log in to book an appointment
-          </label>
-        </div>
+    <div className="flex min-h-screen items-center justify-center bg-gray-100">
+      <div className="w-full max-w-md bg-white p-8 rounded-lg shadow-lg">
+        <h2 className="text-2xl font-bold text-gray-800 mb-6">LOGIN</h2>
         <form onSubmit={handleSubmit}>
           <div className="mb-4">
-            <label className="block text-sm font-medium text-gray-600">
-              Email
-            </label>
             <input
-              ref={emailRef}
-              name="email"
               type="email"
+              name="email"
               value={formData.email}
               onChange={handleChange}
-              className="mt-1 w-full rounded-lg border border-gray-300 p-2 focus:border-blue-500 focus:ring focus:ring-blue-200"
-              placeholder="Enter your email"
+              className="w-full p-3 border border-gray-300 rounded-lg focus:border-blue-500"
+              placeholder="Email"
             />
-            {error.email && (
-              <p className="text-red-500 text-sm">{error.email}</p>
-            )}
           </div>
-          <div className="mb-4">
-            <label className="block text-sm font-medium text-gray-600">
-              Password
-            </label>
+          <div className="mb-2">
             <input
-              ref={passwordRef}
-              name="password"
               type="password"
+              name="password"
               value={formData.password}
               onChange={handleChange}
-              className="mt-1 w-full rounded-lg border border-gray-300 p-2 focus:border-blue-500 focus:ring focus:ring-blue-200"
-              placeholder="Enter your password"
+              className="w-full p-3 border border-gray-300 rounded-lg focus:border-blue-500"
+              placeholder="Password"
             />
-            {error.password && (
-              <p className="text-red-500 text-sm">{error.password}</p>
-            )}
           </div>
-          <p className="text-end">
-            <Link
-              to="/ForgotPassword"
-              className="text-blue-500 hover:underline"
+          <div className="mb-4 text-right">
+            <button
+              type="button"
+              className="text-blue-600 hover:underline text-sm"
+              onClick={() => navigate("/ForgotPassword")}
             >
               Forgot Password?
-            </Link>
-          </p>
-          <br />
+            </button>
+          </div>
+          {error && <p className="text-red-500 text-sm">{error}</p>}
           <button
             type="submit"
-            className="w-full rounded-lg bg-[#2a7fba] p-2 text-white hover:opacity-90 transition-shadow duration-200 shadow-lg hover:shadow-xl"
+            className="w-full bg-[#2a7fba] p-3 text-white rounded-lg hover:opacity-90"
           >
-            Login
+            LOGIN
           </button>
-          <p className="mt-4 text-start text-sm text-gray-600">
-            Create a new account?{" "}
-            <Link to="/Register" className="text-blue-500 hover:underline">
-              Click here
-            </Link>
-          </p>
         </form>
       </div>
     </div>

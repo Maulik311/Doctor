@@ -36,21 +36,27 @@ function Register() {
     setError(newErrors);
 
     if (Object.keys(newErrors).length === 0) {
-      // Store user data in localStorage
-      localStorage.setItem("registeredUser", JSON.stringify(formData));
+      let registeredUsers = JSON.parse(localStorage.getItem("registeredUsers")) || [];
 
-      alert("Registration successful!");
-      console.log("Registered Data:", formData);
+      if (registeredUsers.some((user) => user.email === formData.email)) {
+        alert("Email already registered. Please login.");
+        navigate("/Login");
+        return;
+      }
 
-      setFormData({
-        name: "",
-        email: "",
-        password: "",
-        confirmPassword: "",
-        termsAccepted: false,
-      });
+      const newUser = {
+        name: formData.name,
+        email: formData.email,
+        password: formData.password,
+      };
 
-      navigate("/Login"); // Redirect to Login page
+      registeredUsers.push(newUser);
+      localStorage.setItem("registeredUsers", JSON.stringify(registeredUsers));
+
+      localStorage.setItem("loggedInUser", JSON.stringify(newUser));
+
+      alert("Registration successful! Redirecting to home page...");
+      navigate("/Login"); 
     }
   }
 
@@ -60,103 +66,45 @@ function Register() {
         <h2 className="mb-6 text-start text-2xl font-bold text-gray-800">
           CREATE ACCOUNT
         </h2>
-        <div className="mb-4">
-          <label className="block text-sm font-medium text-gray-600">
-            Please sign up to book an appointment
-          </label>
-        </div>
         <form onSubmit={handleSubmit}>
           <div className="mb-4">
-            <input
-              type="text"
-              name="name"
-              value={formData.name}
-              onChange={handleChange}
-              className="w-full rounded-lg border border-gray-300 p-3 text-gray-700 focus:border-blue-500 focus:ring focus:ring-blue-200"
-              placeholder="Your Name"
-            />
+            <input type="text" name="name" value={formData.name} onChange={handleChange} 
+              className="w-full rounded-lg border border-gray-300 p-3 text-gray-700 focus:border-blue-500" placeholder="Your Name" />
             {error.name && <p className="text-red-500 text-sm">{error.name}</p>}
           </div>
 
           <div className="mb-4">
-            <input
-              type="email"
-              name="email"
-              value={formData.email}
-              onChange={handleChange}
-              className="w-full rounded-lg border border-gray-300 p-3 text-gray-700 focus:border-blue-500 focus:ring focus:ring-blue-200"
-              placeholder="Your Email"
-            />
-            {error.email && (
-              <p className="text-red-500 text-sm">{error.email}</p>
-            )}
+            <input type="email" name="email" value={formData.email} onChange={handleChange} 
+              className="w-full rounded-lg border border-gray-300 p-3 text-gray-700 focus:border-blue-500" placeholder="Your Email" />
+            {error.email && <p className="text-red-500 text-sm">{error.email}</p>}
           </div>
 
-          <div className="mb-4 relative">
-            <input
-              type="password"
-              name="password"
-              value={formData.password}
-              onChange={handleChange}
-              className="w-full rounded-lg border border-gray-300 p-3 text-gray-700 focus:border-blue-500 focus:ring focus:ring-blue-200"
-              placeholder="Password"
-            />
-            {error.password && (
-              <p className="text-red-500 text-sm">{error.password}</p>
-            )}
-            <span className="absolute right-3 top-3 text-gray-400 cursor-pointer">
-              👁
-            </span>
+          <div className="mb-4">
+            <input type="password" name="password" value={formData.password} onChange={handleChange} 
+              className="w-full rounded-lg border border-gray-300 p-3 text-gray-700 focus:border-blue-500" placeholder="Password" />
+            {error.password && <p className="text-red-500 text-sm">{error.password}</p>}
           </div>
 
-          <div className="mb-4 relative">
-            <input
-              type="password"
-              name="confirmPassword"
-              value={formData.confirmPassword}
-              onChange={handleChange}
-              className="w-full rounded-lg border border-gray-300 p-3 text-gray-700 focus:border-blue-500 focus:ring focus:ring-blue-200"
-              placeholder="Confirm Password"
-            />
-            {error.confirmPassword && (
-              <p className="text-red-500 text-sm">{error.confirmPassword}</p>
-            )}
-            <span className="absolute right-3 top-3 text-gray-400 cursor-pointer">
-              🔒
-            </span>
+          <div className="mb-4">
+            <input type="password" name="confirmPassword" value={formData.confirmPassword} onChange={handleChange} 
+              className="w-full rounded-lg border border-gray-300 p-3 text-gray-700 focus:border-blue-500" placeholder="Confirm Password" />
+            {error.confirmPassword && <p className="text-red-500 text-sm">{error.confirmPassword}</p>}
           </div>
 
           <div className="mb-4 flex items-center">
-            <input
-              type="checkbox"
-              name="termsAccepted"
-              checked={formData.termsAccepted}
-              onChange={handleChange}
-              className="h-4 w-4 text-blue-500"
-            />
+            <input type="checkbox" name="termsAccepted" checked={formData.termsAccepted} onChange={handleChange} className="h-4 w-4 text-blue-500" />
             <span className="ml-2 text-sm text-gray-600">
-              I agree to all statements in{" "}
-              <Link to="/" className="text-blue-500 hover:underline">
-                Terms of Service
-              </Link>
+              I agree to the <Link to="/" className="text-blue-500 hover:underline">Terms of Service</Link>
             </span>
           </div>
-          {error.termsAccepted && (
-            <p className="text-red-500 text-sm">{error.termsAccepted}</p>
-          )}
+          {error.termsAccepted && <p className="text-red-500 text-sm">{error.termsAccepted}</p>}
 
-          <button
-            type="submit"
-            className="w-full rounded-lg bg-[#2a7fba] p-3 text-white hover:opacity-90"
-          >
+          <button type="submit" className="w-full rounded-lg bg-[#2a7fba] p-3 text-white hover:opacity-90">
             SIGN UP
           </button>
 
           <p className="mt-4 text-center text-sm text-gray-600">
-            Already have an account?{" "}
-            <Link to="/Login" className="text-blue-500 hover:underline">
-              Login here
-            </Link>
+            Already have an account? <Link to="/Login" className="text-blue-500 hover:underline">Login here</Link>
           </p>
         </form>
       </div>
