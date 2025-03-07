@@ -12,6 +12,7 @@ import AllDoctor from "./Pages/AllDoctor";
 import Appointment from "./Context/Appointment";
 import VerifyOTP from "./Component/Auth/Verify";
 import ResetPassword from "./Component/Auth/ResetPassword";
+import UserProfile from "./Component/Auth/UserProfile";
 
 function App() {
   return (
@@ -27,6 +28,7 @@ function App() {
         <Route path="/About" element={<About />} />
         <Route path="/ResetPassword" element={<ResetPassword />} />
         <Route path="/AllDoctor" element={<AllDoctor />} />
+        <Route path="/UserProfile" element={<UserProfile />} />
         <Route path="/Appointment" element={<Appointment />} />
         <Route path="/appointment/:doctorId" element={<Appointment />} />
       </Routes>

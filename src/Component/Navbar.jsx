@@ -1,12 +1,23 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import img1 from "../Image/navbarlogo.svg";
 
 function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
+  const [loggedInUser, setLoggedInUser] = useState(null);
+
+  useEffect(() => {
+    const user = JSON.parse(localStorage.getItem("loggedInUser"));
+    setLoggedInUser(user);
+  }, []);
+
+  function handleLogout() {
+    localStorage.removeItem("loggedInUser");
+    setLoggedInUser(null);
+  }
 
   return (
-    <nav className=" bg-white shadow-md fixed w-full z-20 top-0 left-0 border-b border-gray-200">
+    <nav className="bg-white shadow-md fixed w-full z-20 top-0 left-0 border-b border-gray-200">
       <div className="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
         <Link to="/" className="flex items-center space-x-3">
           <img src={img1} className="h-8" alt="Logo" />
@@ -32,7 +43,7 @@ function Navbar() {
         </button>
 
         <div className="text-sm hidden md:flex space-x-6">
-          <Link to="/" className=" text-gray-900 hover:text-[#2a7fba]">
+          <Link to="/" className="text-gray-900 hover:text-[#2a7fba]">
             HOME
           </Link>
           <Link to="/AllDoctor" className="text-gray-900 hover:text-[#2a7fba]">
@@ -50,12 +61,30 @@ function Navbar() {
           <button className="border border-gray-700 text-gray-900 px-4 py-2 rounded-3xl hover:text-[#2a7fba]">
             Admin Panel
           </button>
-          <Link
-            to="/Register"
-            className="bg-[#2a7fba] text-white px-6 py-2 rounded-full hover:opacity-90"
-          >
-            Create account
-          </Link>
+
+          {loggedInUser ? (
+            <div className="flex items-center space-x-4">
+              <Link
+                to="/UserProfile"
+                className="bg-[#2a7fba] text-white px-6 py-2 rounded-full hover:opacity-90"
+              >
+                Profile
+              </Link>
+              <button
+                onClick={handleLogout}
+                className="border border-red-600 text-red-600 px-4 py-2 rounded-3xl hover:bg-red-600 hover:text-white"
+              >
+                Logout
+              </button>
+            </div>
+          ) : (
+            <Link
+              to="/Register"
+              className="bg-[#2a7fba] text-white px-6 py-2 rounded-full hover:opacity-90"
+            >
+              Create account
+            </Link>
+          )}
         </div>
       </div>
 
@@ -70,7 +99,10 @@ function Navbar() {
           >
             ALL DOCTORS
           </Link>
-          <Link to="/About" className="block text-gray-900 hover:text-[#2a7fba]">
+          <Link
+            to="/About"
+            className="block text-gray-900 hover:text-[#2a7fba]"
+          >
             ABOUT
           </Link>
           <Link
@@ -82,12 +114,27 @@ function Navbar() {
           <button className="w-full border border-gray-700 text-gray-900 px-4 py-2 rounded-3xl hover:text-[#2a7fba]">
             Admin Panel
           </button>
-          <Link
-            to="/Register"
-            className="block text-center bg-[#2a7fba] text-white px-6 py-2 rounded-full hover:opacity-90"
-          >
-            Create account
-          </Link>
+
+          {loggedInUser ? (
+            <div>
+             
+                <input type="file" name="file " id="profile" />
+              
+              <button
+                onClick={handleLogout}
+                className="w-full mt-2 border border-red-600 text-red-600 px-4 py-2 rounded-3xl hover:bg-red-600 hover:text-white"
+              >
+                Logout
+              </button>
+            </div>
+          ) : (
+            <Link
+              to="/Register"
+              className="block text-center bg-[#2a7fba] text-white px-6 py-2 rounded-full hover:opacity-90"
+            >
+              Create account
+            </Link>
+          )}
         </div>
       )}
     </nav>
