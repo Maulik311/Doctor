@@ -30,16 +30,20 @@ function Login() {
     } else if (!formData.password) {
       passwordRef.current.focus();
     } else {
+      // Store user data in localStorage
+      localStorage.setItem("loggedInUser", JSON.stringify(formData));
+
       alert("Login successful!");
       console.log("Login Data:", formData);
       setFormData({ email: "", password: "" });
       setError({ email: "", password: "" });
-      navigate("/Register");
+
+      navigate("/"); // Redirect to home or dashboard
     }
   }
 
   return (
-    <div className="flex min-h-screen mt-20  p-4 items-center justify-center">
+    <div className="flex min-h-screen mt-20 p-4 items-center justify-center">
       <div className="w-full max-w-md rounded-2xl bg-white p-8 shadow-2xl">
         <h1 className="mb-6 text-start text-2xl font-bold text-gray-800">
           Login
@@ -89,9 +93,10 @@ function Login() {
               to="/ForgotPassword"
               className="text-blue-500 hover:underline"
             >
-              ForgotPassword ?
+              Forgot Password?
             </Link>
-          </p><br />
+          </p>
+          <br />
           <button
             type="submit"
             className="w-full rounded-lg bg-[#2a7fba] p-2 text-white hover:opacity-90 transition-shadow duration-200 shadow-lg hover:shadow-xl"
