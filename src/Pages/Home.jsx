@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import homeImg from "../Image/home.png";
 import p1 from "../Image/p1.jpeg";
 import p2 from "../Image/p2.jpeg";
@@ -111,7 +111,14 @@ const doctors = [
 
 function Home() {
   const navigate = useNavigate();
-  navigate("/AllDoctor");
+  const loggedInUser = JSON.parse(localStorage.getItem("loggedInUser")) || null;
+
+  useEffect(() => {
+    // Optional: Redirect to login if not authenticated (uncomment if needed)
+    // if (!loggedInUser) {
+    //   navigate("/Login");
+    // }
+  }, [navigate, loggedInUser]);
 
   return (
     <>
@@ -145,7 +152,7 @@ function Home() {
               </p>
             </div>
             <button className="relative bg-[#ffffff] hover:bg-[#dddddd] text-black font-semibold text-lg px-6 py-2 rounded-full transition-all duration-300 ease-in-out transform hover:scale-105 hover:shadow-md before:absolute before:top-0 before:left-[4%] before:w-[92%] before:h-1/2 before:bg-gradient-to-b before:from-white before:to-transparent before:opacity-50 before:rounded-full">
-              Bookappointment →
+              Book appointment →
             </button>
           </div>
           <div className="w-full md:w-1/2 mt-6 md:mt-0">
@@ -214,22 +221,30 @@ function Home() {
         </button>
       </div>
 
-      <section className="bg-[#2a7fba]  container mx-auto [px-4] mt-20 sm:[px-6] lg:[px-8]  pt-12 rounded-xl text-white py-8 sm:py-12 px-4 sm:px-6 lg:px-12 xl:px-18 flex flex-col md:flex-row items-center gap-8">
+      <section className="bg-[#2a7fba] container mx-auto mt-20 pt-12 rounded-xl text-white py-8 sm:py-12 px-4 sm:px-6 lg:px-12 xl:px-18 flex flex-col md:flex-row items-center gap-8">
         <div className="w-full md:w-1/2 text-center md:text-left">
           <h3 className="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-bold leading-tight">
             Book Appointment <br /> With 100+ Trusted Doctors
           </h3>
           <br />
           <br />
-
-          <button
-            className="relative bg-[#ffffff] hover:bg-[#dddddd] text-black font-semibold text-lg px-6 py-2 rounded-full transition-all duration-300 ease-in-out transform hover:scale-105 hover:shadow-md before:absolute before:top-0 before:left-[4%] before:w-[92%] before:h-1/2 before:bg-gradient-to-b before:from-white before:to-transparent before:opacity-50 before:rounded-full"
-            onClick={() => navigate("/Register")}
-          >
-            Create account
-          </button>
+          {loggedInUser ? (
+            <img
+              src={loggedInUser.profilePic || "https://via.placeholder.com/150"}
+              alt="Profile"
+              className="w-12 h-12 rounded-full border-2 border-white object-cover cursor-pointer"
+              onClick={() => navigate("/UserProfile")} // Updated to match UserProfile route
+            />
+          ) : (
+            <button
+              className="relative bg-[#ffffff] hover:bg-[#dddddd] text-black font-semibold text-lg px-6 py-2 rounded-full transition-all duration-300 ease-in-out transform hover:scale-105 hover:shadow-md before:absolute before:top-0 before:left-[4%] before:w-[92%] before:h-1/2 before:bg-gradient-to-b before:from-white before:to-transparent before:opacity-50 before:rounded-full"
+              onClick={() => navigate("/Register")}
+            >
+              Create account
+            </button>
+          )}
         </div>
-        <div className="w-full md:w-1/2 mt-6 md:mt-0 ">
+        <div className="w-full md:w-1/2 mt-6 md:mt-0">
           <img
             className="w-full max-w-[400px] h-80 mx-auto md:max-w-full object-contain"
             src={doc11}

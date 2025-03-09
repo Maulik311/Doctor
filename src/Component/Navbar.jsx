@@ -1,19 +1,16 @@
-import React, { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
+import React, { useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import img1 from "../Image/navbarlogo.svg";
 
 function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
-  const [loggedInUser, setLoggedInUser] = useState(null);
-
-  useEffect(() => {
-    const user = JSON.parse(localStorage.getItem("loggedInUser"));
-    setLoggedInUser(user);
-  }, []);
+  const navigate = useNavigate();
+  // Fetch loggedInUser directly in render to always get the latest data
+  const loggedInUser = JSON.parse(localStorage.getItem("loggedInUser")) || null;
 
   function handleLogout() {
     localStorage.removeItem("loggedInUser");
-    setLoggedInUser(null);
+    navigate("/"); // Redirect to home page after logout
   }
 
   return (
@@ -64,11 +61,14 @@ function Navbar() {
 
           {loggedInUser ? (
             <div className="flex items-center space-x-4">
-              <Link
-                to="/UserProfile"
-                className="bg-[#2a7fba] text-white px-6 py-2 rounded-full hover:opacity-90"
-              >
-                Profile
+              <Link to="/UserProfile" className="flex items-center">
+                <img
+                  src={
+                    loggedInUser.profilePic || "https://via.placeholder.com/40"
+                  }
+                  alt="Profile"
+                  className="w-10 h-10 rounded-full object-cover border border-gray-300"
+                />
               </Link>
               <button
                 onClick={handleLogout}
@@ -116,13 +116,22 @@ function Navbar() {
           </button>
 
           {loggedInUser ? (
-            <div>
-             
-                <input type="file" name="file " id="profile" />
-              
+            <div className="space-y-4">
+              <Link to="/UserProfile" className="flex items-center space-x-2">
+                <img
+                  src={
+                    loggedInUser.profilePic || "https://via.placeholder.com/40"
+                  }
+                  alt="Profile"
+                  className="w-10 h-10 rounded-full object-cover border border-gray-300"
+                />
+                <span className="text-gray-900 hover:text-[#2a7fba]">
+                  Profile
+                </span>
+              </Link>
               <button
                 onClick={handleLogout}
-                className="w-full mt-2 border border-red-600 text-red-600 px-4 py-2 rounded-3xl hover:bg-red-600 hover:text-white"
+                className="w-full border border-red-600 text-red-600 px-4 py-2 rounded-3xl hover:bg-red-600 hover:text-white"
               >
                 Logout
               </button>
