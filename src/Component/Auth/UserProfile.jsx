@@ -9,7 +9,7 @@ function UserProfile() {
     gender: "",
     dob: "",
     maritalStatus: "",
-    countryCode: "+91", // Default country code
+    countryCode: "+91",
     phone: "",
     profilePic: "",
   });
@@ -20,20 +20,19 @@ function UserProfile() {
     if (storedUser) {
       setUser({
         ...storedUser,
-        countryCode: storedUser.countryCode || "+91", // Default to +91 if not present
+        countryCode: storedUser.countryCode || "+91", 
         phone: storedUser.phone || "",
       });
     } else {
-      navigate("/"); // Redirect to home if no user is logged in
+      navigate("/"); 
     }
   }, [navigate]);
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
 
-    // Restrict phone number to digits only and max 10 characters
     if (name === "phone") {
-      const numericValue = value.replace(/[^0-9]/g, ""); // Allow only numbers
+      const numericValue = value.replace(/[^0-9]/g, ""); 
       if (numericValue.length <= 10) {
         setUser((prevUser) => ({
           ...prevUser,
@@ -70,11 +69,10 @@ function UserProfile() {
       icon: "success",
       confirmButtonText: "OK",
     }).then(() => {
-      navigate("/"); // Redirect to Home page after clicking OK
+      navigate("/");
     });
   };
 
-  // List of country codes (you can expand this as needed)
   const countryCodes = [
     { code: "+91", label: "India (+91)" },
     { code: "+1", label: "USA/Canada (+1)" },
@@ -249,7 +247,7 @@ function UserProfile() {
                 name="phone"
                 value={user.phone}
                 onChange={handleInputChange}
-                maxLength="10" // Restrict to 10 digits
+                maxLength="10"
                 className="w-2/3 p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
                 placeholder="Enter your phone number"
               />

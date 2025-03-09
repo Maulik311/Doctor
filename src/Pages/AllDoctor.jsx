@@ -16,7 +16,6 @@ import doc14 from "../Image/doc14.png";
 import doc15 from "../Image/doc15.png";
 import doc16 from "../Image/doc16.png";
 
-// DoctorCard Component
 const DoctorCard = ({ doctor }) => {
   const navigate = useNavigate();
 
@@ -47,7 +46,6 @@ const DoctorCard = ({ doctor }) => {
   );
 };
 
-// Doctors Data
 const Doctor = [
   {
     id: "1",
@@ -215,7 +213,6 @@ function AllDoctor() {
           ))}
         </div>
 
-        {/* Doctor List */}
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4 w-full">
           {filterDoctors().map((doctor) => (
             <DoctorCard key={doctor.id} doctor={doctor} />

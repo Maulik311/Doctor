@@ -57,8 +57,8 @@ function Register() {
       }
 
       const profilePicUrl = formData.profilePic
-        ? URL.createObjectURL(formData.profilePic) // Convert file to URL
-        : "https://via.placeholder.com/150"; // Default if no file uploaded
+        ? URL.createObjectURL(formData.profilePic)
+        : "https://via.placeholder.com/150";
 
       const newUser = {
         name: formData.name,
@@ -83,7 +83,7 @@ function Register() {
   }
 
   return (
-    <div className="flex min-h-screen mt-14 p-4 items-center justify-center bg-gray-100">
+    <div className="flex min-h-screen mt-20 p-4 items-center justify-center ">
       <div className="w-full max-w-md rounded-lg bg-white p-8 shadow-lg">
         <h2 className="mb-6 text-start text-2xl font-bold text-gray-800">
           CREATE ACCOUNT

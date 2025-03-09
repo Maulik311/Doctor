@@ -35,7 +35,7 @@ const ContactUs = () => {
             Learn more about our teams and job openings.
           </p>
 
-          <button className="mt-4 px-6 py-2 border border-gray-800 text-gray-800 rounded-md hover:bg-[#49535a] hover:text-white transition">
+          <button className="mt-4 px-6 py-2 border border-[#2a7fba] text-[#2a7fba] rounded-md hover:bg-[#2a7fba] hover:text-white transition">
             Explore Jobs
           </button>
         </div>
