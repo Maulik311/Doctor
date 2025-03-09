@@ -119,7 +119,7 @@ function Home() {
 
   return (
     <>
-      <div className="container mx-auto px-4 mt-6 md:px-16 lg:px-10 pt-12 sm:pt-20 sm:px-10">
+      <div className="container mx-auto px-4 mt-6 md:px-16 lg:px-10 pt-14 sm:pt-20 sm:px-10">
         <section className="bg-[#2a7fba] rounded-xl text-white py-8 sm:py-12 px-4 sm:px-6 lg:px-12 xl:px-18 flex flex-col md:flex-row items-center gap-8">
           <div className="w-full md:w-1/2 text-center md:text-left">
             <h3 className="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-bold leading-tight">
@@ -152,7 +152,7 @@ function Home() {
               className="relative bg-[#ffffff] hover:bg-[#dddddd] text-black font-semibold text-lg px-6 py-2 rounded-full transition-all duration-300 ease-in-out transform hover:scale-105 hover:shadow-md before:absolute before:top-0 before:left-[4%] before:w-[92%] before:h-1/2 before:bg-gradient-to-b before:from-white before:to-transparent before:opacity-50 before:rounded-full"
               onClick={() => navigate("/Register")}
             >
-              Create account →
+              Create Account →
             </button>
           </div>
           <div className="w-full md:w-1/2 mt-6 md:mt-0">
