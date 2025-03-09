@@ -114,10 +114,7 @@ function Home() {
   const loggedInUser = JSON.parse(localStorage.getItem("loggedInUser")) || null;
 
   useEffect(() => {
-    // Optional: Redirect to login if not authenticated (uncomment if needed)
-    // if (!loggedInUser) {
-    //   navigate("/Login");
-    // }
+  
   }, [navigate, loggedInUser]);
 
   return (
@@ -151,8 +148,11 @@ function Home() {
                 schedule your appointment hassle-free.
               </p>
             </div>
-            <button className="relative bg-[#ffffff] hover:bg-[#dddddd] text-black font-semibold text-lg px-6 py-2 rounded-full transition-all duration-300 ease-in-out transform hover:scale-105 hover:shadow-md before:absolute before:top-0 before:left-[4%] before:w-[92%] before:h-1/2 before:bg-gradient-to-b before:from-white before:to-transparent before:opacity-50 before:rounded-full">
-              Book appointment →
+            <button
+              className="relative bg-[#ffffff] hover:bg-[#dddddd] text-black font-semibold text-lg px-6 py-2 rounded-full transition-all duration-300 ease-in-out transform hover:scale-105 hover:shadow-md before:absolute before:top-0 before:left-[4%] before:w-[92%] before:h-1/2 before:bg-gradient-to-b before:from-white before:to-transparent before:opacity-50 before:rounded-full"
+              onClick={() => navigate("/Register")}
+            >
+              Create account →
             </button>
           </div>
           <div className="w-full md:w-1/2 mt-6 md:mt-0">
@@ -167,9 +167,9 @@ function Home() {
 
       <div className="py-12 sm:py-20 px-4 sm:px-6 lg:px-8">
         <div className="text-center max-w-2xl mx-auto">
-          <h2 className="text-xl sm:text-2xl md:text-3xl font-semibold text-gray-800">
+          <h3 className="text-xl sm:text-2xl md:text-3xl font-semibold text-gray-800">
             Find by Speciality
-          </h2>
+          </h3>
           <p className="text-gray-600 mt-2 gap-4 text-sm sm:text-base">
             Simply browse through our extensive list of trusted doctors,
             schedule your appointment hassle-free.
@@ -228,21 +228,13 @@ function Home() {
           </h3>
           <br />
           <br />
-          {loggedInUser ? (
-            <img
-              src={loggedInUser.profilePic || "https://via.placeholder.com/150"}
-              alt="Profile"
-              className="w-12 h-12 rounded-full border-2 border-white object-cover cursor-pointer"
-              onClick={() => navigate("/UserProfile")} // Updated to match UserProfile route
-            />
-          ) : (
-            <button
-              className="relative bg-[#ffffff] hover:bg-[#dddddd] text-black font-semibold text-lg px-6 py-2 rounded-full transition-all duration-300 ease-in-out transform hover:scale-105 hover:shadow-md before:absolute before:top-0 before:left-[4%] before:w-[92%] before:h-1/2 before:bg-gradient-to-b before:from-white before:to-transparent before:opacity-50 before:rounded-full"
-              onClick={() => navigate("/Register")}
-            >
-              Create account
-            </button>
-          )}
+          {/* Always show "Create account" button here */}
+          <button
+            className="relative bg-[#ffffff] hover:bg-[#dddddd] text-black font-semibold text-lg px-6 py-2 rounded-full transition-all duration-300 ease-in-out transform hover:scale-105 hover:shadow-md before:absolute before:top-0 before:left-[4%] before:w-[92%] before:h-1/2 before:bg-gradient-to-b before:from-white before:to-transparent before:opacity-50 before:rounded-full"
+            onClick={() => navigate("/Register")}
+          >
+            Create account
+          </button>
         </div>
         <div className="w-full md:w-1/2 mt-6 md:mt-0">
           <img
