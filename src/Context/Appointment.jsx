@@ -1,6 +1,10 @@
 import React, { useState } from "react";
 import { useLocation } from "react-router-dom";
 import tickmark from "../Image/tickmark.svg";
+import visaIcon from "../Image/visa.png"; // Add this SVG to your Image folder
+import cashIcon from "../Image/cash.png"; // Add this SVG to your Image folder
+import netbankingIcon from "../Image/netbankking.png"; // Add this SVG to your Image folder
+import gpayIcon from "../Image/g-pay.png"; // Add this SVG to your Image folder
 
 function Appointment() {
   const location = useLocation();
@@ -11,6 +15,7 @@ function Appointment() {
   const [patientPhone, setPatientPhone] = useState("");
   const [patientEmail, setPatientEmail] = useState("");
   const [appointmentType, setAppointmentType] = useState("In-Person");
+  const [paymentMethod, setPaymentMethod] = useState("Visa"); // Default payment method
   const [isConfirmed, setIsConfirmed] = useState(false);
 
   if (!doctor) {
@@ -40,11 +45,12 @@ function Appointment() {
       selectedTime &&
       patientName &&
       patientPhone &&
-      patientEmail
+      patientEmail &&
+      paymentMethod
     ) {
       setIsConfirmed(true);
     } else {
-      alert("Please fill all required fields.");
+      alert("Please fill all required fields, including payment method.");
     }
   };
 
@@ -55,6 +61,7 @@ function Appointment() {
     setPatientPhone("");
     setPatientEmail("");
     setAppointmentType("In-Person");
+    setPaymentMethod("Visa");
     setIsConfirmed(false);
   };
 
@@ -67,7 +74,8 @@ function Appointment() {
           </h2>
           <p className="text-gray-700 mb-6">
             {patientName}, your appointment with {doctor.name} is set for{" "}
-            {selectedDate} at {selectedTime} ({appointmentType}).
+            {selectedDate} at {selectedTime} ({appointmentType}). Payment will
+            be processed via {paymentMethod}.
           </p>
           <button
             onClick={resetForm}
@@ -102,6 +110,7 @@ function Appointment() {
               {dates.map((date) => (
                 <button
                   key={date}
+                  type="button"
                   className={`px-4 py-2 rounded-full ${
                     selectedDate === date
                       ? "bg-[#2a7fba] text-white"
@@ -117,6 +126,7 @@ function Appointment() {
               {times.map((time) => (
                 <button
                   key={time}
+                  type="button"
                   className={`px-4 py-2 rounded-full ${
                     selectedTime === time
                       ? "bg-[#2a7fba] text-white"
@@ -178,6 +188,60 @@ function Appointment() {
               />{" "}
               Video Call
             </label>
+          </div>
+
+          <div className="mt-4">
+            <h2 className="text-lg font-semibold">Payment Method</h2>
+            <div className="flex flex-col sm:flex-row gap-4">
+              <label className="flex items-center">
+                <input
+                  type="radio"
+                  value="Visa"
+                  checked={paymentMethod === "visaIcon"}
+                  onChange={(e) => setPaymentMethod(e.target.value)}
+                  className="mr-2"
+                />
+                <img src={visaIcon} alt="Visa" className="w-12 h-10 mr-2" />
+                Visa
+              </label>
+              <label className="flex items-center">
+                <input
+                  type="radio"
+                  value="Cash"
+                  checked={paymentMethod === "Cash"}
+                  onChange={(e) => setPaymentMethod(e.target.value)}
+                  className="mr-2"
+                />
+                <img src={cashIcon} alt="Cash" className="w-12 h-10 mr-2" />
+                Cash
+              </label>
+              <label className="flex items-center">
+                <input
+                  type="radio"
+                  value="Net Banking"
+                  checked={paymentMethod === "Net Banking"}
+                  onChange={(e) => setPaymentMethod(e.target.value)}
+                  className="mr-2"
+                />
+                <img
+                  src={netbankingIcon}
+                  alt="Net Banking"
+                  className="w-12 h-10 mr-2"
+                />
+                Net Banking
+              </label>
+              <label className="flex items-center">
+                <input
+                  type="radio"
+                  value="G-Pay"
+                  checked={paymentMethod === "G-Pay"}
+                  onChange={(e) => setPaymentMethod(e.target.value)}
+                  className="mr-2"
+                />
+                <img src={gpayIcon} alt="G-Pay" className="w-12 h-10 mr-2" />
+                G-Pay
+              </label>
+            </div>
           </div>
 
           <button

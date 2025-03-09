@@ -10,7 +10,11 @@ function Navbar() {
   function handleLogout() {
     localStorage.removeItem("loggedInUser");
     navigate("/"); // Redirect to home page after logout
+    setIsOpen(false); // Close the menu on logout (for mobile)
   }
+
+  // Function to close the menu when a link is clicked
+  const closeMenu = () => setIsOpen(false);
 
   return (
     <nav className="bg-white shadow-md fixed w-full z-20 top-0 left-0 border-b border-gray-200">
@@ -118,28 +122,38 @@ function Navbar() {
       {/* Mobile Menu (Hamburger Menu Content) */}
       {isOpen && (
         <div className="md:hidden bg-white w-full p-4 space-y-4 border-t border-gray-200">
-          <Link to="/" className="block text-gray-900 hover:text-[#2a7fba]">
+          <Link
+            to="/"
+            onClick={closeMenu}
+            className="block text-gray-900 hover:text-[#2a7fba]"
+          >
             HOME
           </Link>
           <Link
             to="/AllDoctor"
+            onClick={closeMenu}
             className="block text-gray-900 hover:text-[#2a7fba]"
           >
             ALL DOCTORS
           </Link>
           <Link
             to="/About"
+            onClick={closeMenu}
             className="block text-gray-900 hover:text-[#2a7fba]"
           >
             ABOUT
           </Link>
           <Link
             to="/Contact"
+            onClick={closeMenu}
             className="block text-gray-900 hover:text-[#2a7fba]"
           >
             CONTACT
           </Link>
-          <button className="w-full border border-gray-700 text-gray-900 px-4 py-2 rounded-3xl hover:text-[#2a7fba]">
+          <button
+            className="w-full border border-[#2a7fba] text-[#2a7fba] px-4 py-2 rounded-3xl hover:bg-[#2a7fba] hover:text-white"
+            onClick={closeMenu} // Optional: Close menu if Admin Panel navigates somewhere
+          >
             Admin Panel
           </button>
           {loggedInUser && (
