@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { FaTrash } from "react-icons/fa";
 
@@ -9,6 +9,10 @@ function Appointments() {
   const [showPopup, setShowPopup] = useState(false);
   const [deleteIndex, setDeleteIndex] = useState(null);
   const navigate = useNavigate();
+
+  useEffect(() => {
+    setAppointments(JSON.parse(localStorage.getItem("appointments")) || []);
+  }, []); // Refresh on mount
 
   const handleAddMoreAppointment = () => {
     navigate("/AllDoctor");
@@ -39,7 +43,6 @@ function Appointments() {
       <h2 className="text-2xl font-bold text-gray-800 mb-6">
         Your Appointments
       </h2>
-
       {appointments.length === 0 ? (
         <div>
           <p className="text-gray-600 mb-6">No appointments booked yet.</p>
@@ -124,7 +127,6 @@ function Appointments() {
               </tbody>
             </table>
           </div>
-
           <div className="text-center mt-6">
             <button
               onClick={handleAddMoreAppointment}

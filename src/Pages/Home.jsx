@@ -129,7 +129,7 @@ function Home() {
             <h3 className="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-bold leading-tight">
               Book Appointment <br /> With Trusted Doctors
             </h3>
-            <div className="bg-[#2a7fba] text-white py-4 px-4 sm:px-6 lg:px-8 flex flex-col sm:flex-row items-center justify-between gap-4">
+            <div className="bg-[#2a7fba] text-white py-4 px-4 sm:px-6 lg:px-8 flex flex-col sm:flex-row items-center justify-between gap-2">
               <div className="flex -space-x-2">
                 <img
                   className="w-8 h-8 sm:w-10 sm:h-10 rounded-full border-2 border-white object-cover"
@@ -179,7 +179,7 @@ function Home() {
             schedule your appointment hassle-free.
           </p>
         </div>
-        <div className="mt-8 sm:mt-12 grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-6 sm:gap-8 max-w-5xl mx-auto">
+        <div className="mt-8 sm:mt-12 grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-2 sm:gap-8 max-w-5xl mx-auto">
           {specialities.map((speciality, index) => (
             <div
               key={index}
@@ -187,7 +187,7 @@ function Home() {
               onClick={() => handleSpecialityClick(speciality.name)}
             >
               <div
-                className={`w-16 h-16 sm:w-20 sm:h-20 ${speciality.bg} rounded-full flex items-center justify-center transition-transform hover:scale-105`}
+                className={`w-20 h-20 sm:w-20 sm:h-20 ${speciality.bg} rounded-full flex items-center justify-center transition-transform hover:scale-105`}
               >
                 <img
                   src={speciality.img}

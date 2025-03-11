@@ -260,10 +260,9 @@ function Appointment() {
             <p className="text-red-500 text-sm mt-2">{errors.selectedTime}</p>
           )}
         </div>
-      </form>
-      <form method="POST" className="shadow-lg mb-6 w-auto">
+
         {/* Patient Details */}
-        <div className="mt-6 text-center ">
+        <div className="mt-6 text-center">
           <h2 className="text-lg font-semibold">Your Details</h2>
           <div className="mt-2">
             <input
@@ -311,7 +310,7 @@ function Appointment() {
 
         {/* Appointment Type */}
         <div className="text-center">
-          <div className="mt-6 ">
+          <div className="mt-6">
             <h2 className="text-lg font-semibold">Appointment Type</h2>
             <div className="mt-2 flex flex-row flex-wrap sm:flex-row gap-4 justify-center">
               <label className="flex items-center">
@@ -340,7 +339,7 @@ function Appointment() {
           </div>
 
           {/* Payment Method */}
-          <div className="mt-6 ">
+          <div className="mt-6">
             <h2 className="text-lg font-semibold">Payment Method</h2>
             <div className="flex flex-row flex-wrap sm:flex-row gap-4 mt-2 justify-center">
               <label className="flex items-center">
@@ -370,11 +369,12 @@ function Appointment() {
             </div>
           </div>
         </div>
+
         {/* Submit Button */}
         <div className="mt-6 text-center">
           <button
             type="submit"
-            className={` mb-6 w-full max-w-xs py-3 rounded-md text-white text-sm sm:text-base ${
+            className={`mb-6 w-full max-w-xs py-3 rounded-md text-white text-sm sm:text-base ${
               isFormValid && !isConfirmed
                 ? "bg-[#2a7fba] hover:bg-[#2a628a]"
                 : "bg-gray-400 cursor-not-allowed"
