@@ -114,8 +114,12 @@ function Home() {
   const loggedInUser = JSON.parse(localStorage.getItem("loggedInUser")) || null;
 
   useEffect(() => {
-  
+    // Add any necessary logic here
   }, [navigate, loggedInUser]);
+
+  const handleSpecialityClick = (specialty) => {
+    navigate("/AllDoctor", { state: { selectedSpecialty: specialty } });
+  };
 
   return (
     <>
@@ -177,7 +181,11 @@ function Home() {
         </div>
         <div className="mt-8 sm:mt-12 grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-6 sm:gap-8 max-w-5xl mx-auto">
           {specialities.map((speciality, index) => (
-            <div key={index} className="flex flex-col items-center">
+            <div
+              key={index}
+              className="flex flex-col items-center cursor-pointer"
+              onClick={() => handleSpecialityClick(speciality.name)}
+            >
               <div
                 className={`w-16 h-16 sm:w-20 sm:h-20 ${speciality.bg} rounded-full flex items-center justify-center transition-transform hover:scale-105`}
               >
@@ -194,6 +202,7 @@ function Home() {
           ))}
         </div>
       </div>
+
       <div className="container mx-auto mt-4 px-4">
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-6 justify-center">
           {doctors.map((doctor, index) => (

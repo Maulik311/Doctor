@@ -81,10 +81,7 @@ function Appointments() {
                     Payment
                   </th>
                   <th className="py-2 px-4 border-b text-left text-gray-700">
-                    Status
-                  </th>
-                  <th className="py-2 px-4 border-b text-left text-gray-700">
-                    Actions
+                    Status / Actions
                   </th>
                 </tr>
               </thead>
@@ -115,18 +112,10 @@ function Appointments() {
                     <td className="py-2 px-4 border-b text-gray-700">
                       {appointment.paymentMethod}
                     </td>
-                    <td className="py-2 px-4 border-b text-gray-700">
-                      {appointment.status}
-                    </td>
-                    <td className="py-2 px-4 border-b text-gray-700 flex items-center space-x-2">
-                      <button
-                        onClick={() => handleDelete(index)}
-                        className="px-3 py-1 text-white bg-red-600 rounded-md hover:bg-red-700 transition"
-                      >
-                        Delete
-                      </button>
+                    <td className="py-2 px-4 border-b text-gray-700 flex items-center justify-between">
+                      <span>{appointment.status}</span>
                       <FaTrash
-                        className="text-red-600 hover:text-red-700 cursor-pointer"
+                        className="text-red-600 hover:text-red-700 cursor-pointer ml-4"
                         onClick={() => handleDelete(index)}
                       />
                     </td>

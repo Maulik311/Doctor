@@ -1,9 +1,7 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import tickmark from "../Image/tickmark.svg";
-import visaIcon from "../Image/visa.png";
 import cashIcon from "../Image/cash.png";
-import netbankingIcon from "../Image/netbankking.png";
 import gpayIcon from "../Image/g-pay.png";
 
 function Appointment() {
@@ -16,8 +14,30 @@ function Appointment() {
   const [patientPhone, setPatientPhone] = useState("");
   const [patientEmail, setPatientEmail] = useState("");
   const [appointmentType, setAppointmentType] = useState("In-Person");
-  const [paymentMethod, setPaymentMethod] = useState("Visa");
+  const [paymentMethod, setPaymentMethod] = useState("Cash");
   const [isConfirmed, setIsConfirmed] = useState(false);
+  const [errors, setErrors] = useState({});
+  const [isFormValid, setIsFormValid] = useState(false);
+
+  useEffect(() => {
+    const isValid =
+      patientName.trim() &&
+      patientPhone.length === 10 &&
+      /\S+@\S+\.\S+/.test(patientEmail) &&
+      selectedDate &&
+      selectedTime &&
+      paymentMethod &&
+      appointmentType;
+    setIsFormValid(isValid);
+  }, [
+    patientName,
+    patientPhone,
+    patientEmail,
+    selectedDate,
+    selectedTime,
+    paymentMethod,
+    appointmentType,
+  ]);
 
   if (!doctor) {
     return (
@@ -39,6 +59,39 @@ function Appointment() {
     "08:30 pm",
   ];
 
+  const validateForm = () => {
+    const newErrors = {};
+
+    if (!patientName.trim()) {
+      newErrors.patientName = "Full name is required";
+    } else if (patientName.length < 2) {
+      newErrors.patientName = "Name must be at least 2 characters";
+    }
+
+    if (!patientPhone) {
+      newErrors.patientPhone = "Phone number is required";
+    } else if (!/^\d{10}$/.test(patientPhone)) {
+      newErrors.patientPhone = "Phone number must be exactly 10 digits";
+    }
+
+    if (!patientEmail) {
+      newErrors.patientEmail = "Email is required";
+    } else if (!/\S+@\S+\.\S+/.test(patientEmail)) {
+      newErrors.patientEmail = "Email is invalid";
+    }
+
+    if (!selectedDate) {
+      newErrors.selectedDate = "Please select a date";
+    }
+
+    if (!selectedTime) {
+      newErrors.selectedTime = "Please select a time";
+    }
+
+    setErrors(newErrors);
+    return Object.keys(newErrors).length === 0;
+  };
+
   const handlePhoneChange = (e) => {
     const value = e.target.value;
     if (/^\d{0,10}$/.test(value)) {
@@ -48,15 +101,7 @@ function Appointment() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (
-      selectedDate &&
-      selectedTime &&
-      patientName &&
-      patientPhone &&
-      patientPhone.length === 10 &&
-      patientEmail &&
-      paymentMethod
-    ) {
+    if (validateForm()) {
       const appointment = {
         doctorName: doctor.name,
         date: selectedDate,
@@ -79,10 +124,6 @@ function Appointment() {
       );
 
       setIsConfirmed(true);
-    } else {
-      alert(
-        "Please fill all required fields correctly. Phone number must be exactly 10 digits."
-      );
     }
   };
 
@@ -93,8 +134,9 @@ function Appointment() {
     setPatientPhone("");
     setPatientEmail("");
     setAppointmentType("In-Person");
-    setPaymentMethod("Visa");
+    setPaymentMethod("Cash");
     setIsConfirmed(false);
+    setErrors({});
   };
 
   const handleClosePopup = () => {
@@ -103,11 +145,10 @@ function Appointment() {
   };
 
   return (
-    <div className="container mx-auto mt-20 p-4">
+    <div className="container mx-auto mt-10 p-4 sm:mt-20">
       {isConfirmed && (
         <div className="fixed inset-0 bg-gray-800 bg-opacity-75 flex items-center justify-center z-50">
-          <div className="bg-white rounded-lg shadow-xl w-full max-w-sm p-6 relative">
-            {/* Close Button */}
+          <div className="bg-white rounded-lg shadow-xl w-full max-w-sm p-6">
             <button
               onClick={handleClosePopup}
               className="absolute top-2 right-2 text-gray-600 hover:text-gray-800 focus:outline-none"
@@ -127,24 +168,22 @@ function Appointment() {
                 />
               </svg>
             </button>
-
-            {/* Popup Content */}
             <h2 className="text-xl font-semibold text-green-600 mb-4 text-center">
               Appointment Confirmed!
             </h2>
             <p className="text-gray-600 text-center mb-6">
               Your appointment has been booked successfully.
             </p>
-            <div className="flex justify-center gap-4">
+            <div className="flex flex-col sm:flex-row justify-center gap-4">
               <button
                 onClick={resetForm}
-                className="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition"
+                className="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition w-full sm:w-auto"
               >
                 Book Another
               </button>
               <button
                 onClick={handleClosePopup}
-                className="px-4 py-2 bg-gray-600 text-white rounded-md hover:bg-gray-700 transition"
+                className="px-4 py-2 bg-gray-600 text-white rounded-md hover:bg-gray-700 transition w-full sm:w-auto"
               >
                 View Appointments
               </button>
@@ -154,32 +193,38 @@ function Appointment() {
       )}
 
       <form onSubmit={handleSubmit} className={isConfirmed ? "opacity-50" : ""}>
+        {/* Doctor Details */}
         <div className="flex flex-col sm:flex-row gap-4">
           <img
-            className="w-72 rounded-lg bg-[#2a7fba]"
+            className="w-full sm:w-72 rounded-lg bg-[#2a7fba] object-cover"
             src={doctor.image}
             alt={doctor.name}
           />
-          <div className="flex-1 border border-[#ADADAD] rounded-lg p-8 bg-white">
-            <p className="flex items-center gap-2 text-3xl font-medium text-gray-700">
+          <div className="flex-1 border border-[#ADADAD] rounded-lg p-4 sm:p-8 bg-white">
+            <p className="flex items-center gap-2 text-2xl sm:text-3xl font-medium text-gray-700">
               {doctor.name}{" "}
               <img className="w-5" src={tickmark} alt="Verified" />
             </p>
-            <p className="text-gray-600">{doctor.specialty}</p>
-            <p className="text-gray-600 font-medium mt-4">
+            <p className="text-gray-600 text-sm sm:text-base">
+              {doctor.specialty}
+            </p>
+            <p className="text-gray-600 font-medium mt-4 text-sm sm:text-base">
               Appointment fee: <span className="text-gray-800">$50</span>
             </p>
           </div>
         </div>
 
+        {/* Date & Time Selection */}
         <div className="mt-10">
-          <h2 className="text-xl font-semibold">Select Date & Time</h2>
-          <div className="flex gap-2 mt-2 overflow-x-auto">
+          <h2 className="text-lg sm:text-xl font-semibold">
+            Select Date & Time
+          </h2>
+          <div className="flex gap-2 mt-2 overflow-x-auto pb-2">
             {dates.map((date) => (
               <button
                 key={date}
                 type="button"
-                className={`px-4 py-2 rounded-full ${
+                className={`px-3 py-2 rounded-full text-sm sm:text-base whitespace-nowrap ${
                   selectedDate === date
                     ? "bg-[#2a7fba] text-white"
                     : "bg-gray-200"
@@ -191,12 +236,15 @@ function Appointment() {
               </button>
             ))}
           </div>
-          <div className="flex gap-2 mt-4 overflow-x-auto">
+          {errors.selectedDate && (
+            <p className="text-red-500 text-sm mt-2">{errors.selectedDate}</p>
+          )}
+          <div className="flex gap-2 mt-4 overflow-x-auto pb-2">
             {times.map((time) => (
               <button
                 key={time}
                 type="button"
-                className={`px-4 py-2 rounded-full ${
+                className={`px-3 py-2 rounded-full text-sm sm:text-base whitespace-nowrap ${
                   selectedTime === time
                     ? "bg-[#2a7fba] text-white"
                     : "bg-gray-200"
@@ -208,130 +256,134 @@ function Appointment() {
               </button>
             ))}
           </div>
+          {errors.selectedTime && (
+            <p className="text-red-500 text-sm mt-2">{errors.selectedTime}</p>
+          )}
         </div>
-
-        <div className="mt-6">
+      </form>
+      <form method="POST" className="shadow-lg mb-6 w-auto">
+        {/* Patient Details */}
+        <div className="mt-6 text-center ">
           <h2 className="text-lg font-semibold">Your Details</h2>
-          <input
-            type="text"
-            placeholder="Full Name"
-            value={patientName}
-            onChange={(e) => setPatientName(e.target.value)}
-            required
-            className="w-full p-2 border rounded-md mb-3"
-            disabled={isConfirmed}
-          />
-          <input
-            type="tel"
-            placeholder="Phone Number (10 digits)"
-            value={patientPhone}
-            onChange={handlePhoneChange}
-            maxLength="10"
-            pattern="\d{10}"
-            required
-            className="w-full p-2 border rounded-md mb-3"
-            disabled={isConfirmed}
-          />
-          <input
-            type="email"
-            placeholder="Email"
-            value={patientEmail}
-            onChange={(e) => setPatientEmail(e.target.value)}
-            required
-            className="w-full p-2 border rounded-md mb-3"
-            disabled={isConfirmed}
-          />
-        </div>
-
-        <div className="mt-4">
-          <h2 className="text-lg font-semibold">Appointment Type</h2>
-          <label className="mr-4">
+          <div className="mt-2">
             <input
-              type="radio"
-              value="In-Person"
-              checked={appointmentType === "In-Person"}
-              onChange={(e) => setAppointmentType(e.target.value)}
+              type="text"
+              placeholder="Full Name"
+              value={patientName}
+              onChange={(e) => setPatientName(e.target.value)}
+              className="w-full max-w-md p-2 border rounded-md text-sm sm:text-base"
               disabled={isConfirmed}
-            />{" "}
-            In-Person
-          </label>
-          <label>
-            <input
-              type="radio"
-              value="Video Call"
-              checked={appointmentType === "Video Call"}
-              onChange={(e) => setAppointmentType(e.target.value)}
-              disabled={isConfirmed}
-            />{" "}
-            Video Call
-          </label>
-        </div>
+            />
+            {errors.patientName && (
+              <p className="text-red-500 text-sm mt-1">{errors.patientName}</p>
+            )}
+          </div>
 
-        <div className="mt-4">
-          <h2 className="text-lg font-semibold">Payment Method</h2>
-          <div className="flex flex-col sm:flex-row gap-4">
-            <label className="flex items-center">
-              <input
-                type="radio"
-                value="Visa"
-                checked={paymentMethod === "Visa"}
-                onChange={(e) => setPaymentMethod(e.target.value)}
-                className="mr-2"
-                disabled={isConfirmed}
-              />
-              <img src={visaIcon} alt="Visa" className="w-12 h-10 mr-2" />
-              Visa
-            </label>
-            <label className="flex items-center">
-              <input
-                type="radio"
-                value="Cash"
-                checked={paymentMethod === "Cash"}
-                onChange={(e) => setPaymentMethod(e.target.value)}
-                className="mr-2"
-                disabled={isConfirmed}
-              />
-              <img src={cashIcon} alt="Cash" className="w-12 h-10 mr-2" />
-              Cash
-            </label>
-            <label className="flex items-center">
-              <input
-                type="radio"
-                value="Net Banking"
-                checked={paymentMethod === "Net Banking"}
-                onChange={(e) => setPaymentMethod(e.target.value)}
-                className="mr-2"
-                disabled={isConfirmed}
-              />
-              <img
-                src={netbankingIcon}
-                alt="Net Banking"
-                className="w-12 h-10 mr-2"
-              />
-              Net Banking
-            </label>
-            <label className="flex items-center">
-              <input
-                type="radio"
-                value="G-Pay"
-                checked={paymentMethod === "G-Pay"}
-                onChange={(e) => setPaymentMethod(e.target.value)}
-                className="mr-2"
-                disabled={isConfirmed}
-              />
-              <img src={gpayIcon} alt="G-Pay" className="w-12 h-10 mr-2" />
-              G-Pay
-            </label>
+          <div className="mt-4">
+            <input
+              type="tel"
+              placeholder="Phone Number"
+              value={patientPhone}
+              onChange={handlePhoneChange}
+              maxLength="10"
+              className="w-full max-w-md p-2 border rounded-md text-sm sm:text-base"
+              disabled={isConfirmed}
+            />
+            {errors.patientPhone && (
+              <p className="text-red-500 text-sm mt-1">{errors.patientPhone}</p>
+            )}
+          </div>
+
+          <div className="mt-4">
+            <input
+              type="email"
+              placeholder="Email"
+              value={patientEmail}
+              onChange={(e) => setPatientEmail(e.target.value)}
+              className="w-full max-w-md p-2 border rounded-md text-sm sm:text-base"
+              disabled={isConfirmed}
+            />
+            {errors.patientEmail && (
+              <p className="text-red-500 text-sm mt-1">{errors.patientEmail}</p>
+            )}
           </div>
         </div>
 
-        <button
-          type="submit"
-          className="mt-4 w-full py-3 bg-green-600 text-white rounded-md hover:bg-green-700 disabled:bg-gray-400"
-          disabled={isConfirmed}
-        >
-          Book Now
-        </button>
+        {/* Appointment Type */}
+        <div className="text-center">
+          <div className="mt-6 ">
+            <h2 className="text-lg font-semibold">Appointment Type</h2>
+            <div className="mt-2 flex flex-row flex-wrap sm:flex-row gap-4 justify-center">
+              <label className="flex items-center">
+                <input
+                  type="radio"
+                  value="In-Person"
+                  checked={appointmentType === "In-Person"}
+                  onChange={(e) => setAppointmentType(e.target.value)}
+                  className="mr-2"
+                  disabled={isConfirmed}
+                />
+                In-Person
+              </label>
+              <label className="flex items-center">
+                <input
+                  type="radio"
+                  value="Video Call"
+                  checked={appointmentType === "Video Call"}
+                  onChange={(e) => setAppointmentType(e.target.value)}
+                  className="mr-2"
+                  disabled={isConfirmed}
+                />
+                Video Call
+              </label>
+            </div>
+          </div>
+
+          {/* Payment Method */}
+          <div className="mt-6 ">
+            <h2 className="text-lg font-semibold">Payment Method</h2>
+            <div className="flex flex-row flex-wrap sm:flex-row gap-4 mt-2 justify-center">
+              <label className="flex items-center">
+                <input
+                  type="radio"
+                  value="Cash"
+                  checked={paymentMethod === "Cash"}
+                  onChange={(e) => setPaymentMethod(e.target.value)}
+                  className="mr-2"
+                  disabled={isConfirmed}
+                />
+                <img src={cashIcon} alt="Cash" className="w-10 h-8 mr-2" />
+                Cash
+              </label>
+              <label className="flex items-center">
+                <input
+                  type="radio"
+                  value="G-Pay"
+                  checked={paymentMethod === "G-Pay"}
+                  onChange={(e) => setPaymentMethod(e.target.value)}
+                  className="mr-2"
+                  disabled={isConfirmed}
+                />
+                <img src={gpayIcon} alt="G-Pay" className="w-10 h-8 mr-2" />
+                G-Pay
+              </label>
+            </div>
+          </div>
+        </div>
+        {/* Submit Button */}
+        <div className="mt-6 text-center">
+          <button
+            type="submit"
+            className={` mb-6 w-full max-w-xs py-3 rounded-md text-white text-sm sm:text-base ${
+              isFormValid && !isConfirmed
+                ? "bg-[#2a7fba] hover:bg-[#2a628a]"
+                : "bg-gray-400 cursor-not-allowed"
+            }`}
+            disabled={!isFormValid || isConfirmed}
+          >
+            Book Now
+          </button>
+        </div>
       </form>
     </div>
   );

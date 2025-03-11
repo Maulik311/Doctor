@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import React, { useState, useEffect } from "react";
+import { useNavigate, useLocation } from "react-router-dom";
 import doc1 from "../Image/Doc1.png";
 import doc2 from "../Image/Doc2.png";
 import doc3 from "../Image/Doc3.png";
@@ -134,7 +134,7 @@ const Doctor = [
   {
     id: "13",
     name: "Dr. Chloe Evans",
-    specialty: "General physician",
+    specialty: "General Physician",
     image: doc14,
     available: true,
   },
@@ -165,7 +165,14 @@ const specialties = [
 ];
 
 function AllDoctor() {
+  const location = useLocation();
   const [selectedSpecialty, setSelectedSpecialty] = useState("All");
+
+  useEffect(() => {
+    if (location.state && location.state.selectedSpecialty) {
+      setSelectedSpecialty(location.state.selectedSpecialty);
+    }
+  }, [location.state]);
 
   const filterDoctors = () =>
     selectedSpecialty === "All"

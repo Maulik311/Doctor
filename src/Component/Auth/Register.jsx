@@ -9,7 +9,6 @@ function Register() {
     email: "",
     password: "",
     confirmPassword: "",
-    profilePic: null, // Changed to null to store file object
     termsAccepted: false,
   });
 
@@ -19,11 +18,10 @@ function Register() {
   const navigate = useNavigate();
 
   function handleChange(e) {
-    const { name, value, type, checked, files } = e.target;
+    const { name, value, type, checked } = e.target;
     setFormData({
       ...formData,
-      [name]:
-        type === "checkbox" ? checked : type === "file" ? files[0] : value,
+      [name]: type === "checkbox" ? checked : value,
     });
   }
 
@@ -56,15 +54,10 @@ function Register() {
         return;
       }
 
-      const profilePicUrl = formData.profilePic
-        ? URL.createObjectURL(formData.profilePic)
-        : "https://via.placeholder.com/150";
-
       const newUser = {
         name: formData.name,
         email: formData.email,
         password: formData.password,
-        profilePic: profilePicUrl,
       };
 
       registeredUsers.push(newUser);
@@ -83,7 +76,7 @@ function Register() {
   }
 
   return (
-    <div className="flex min-h-screen mt-20 p-4 items-center justify-center ">
+    <div className="flex min-h-screen mt-20 p-4 items-center justify-center">
       <div className="w-full max-w-md rounded-lg bg-white p-8 shadow-lg">
         <h2 className="mb-6 text-start text-2xl font-bold text-gray-800">
           CREATE ACCOUNT
@@ -159,19 +152,6 @@ function Register() {
             {error.confirmPassword && (
               <p className="text-red-500 text-sm">{error.confirmPassword}</p>
             )}
-          </div>
-
-          <div className="mb-4">
-            <label className="block text-sm text-gray-600 mb-2">
-              Profile Picture (Optional)
-            </label>
-            <input
-              type="file"
-              name="profilePic"
-              accept="image/*"
-              onChange={handleChange}
-              className="w-full rounded-lg border border-gray-300 p-3 text-gray-700"
-            />
           </div>
 
           <div className="mb-4 flex items-center">
