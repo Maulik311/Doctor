@@ -1,18 +1,22 @@
 import React, { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
-import tickmark from "../Image/tickmark.svg";
+import Swal from "sweetalert2";
 import cashIcon from "../Image/cash.png";
-import gpayIcon from "../Image/g-pay.png";
+import gpay from "../Image/g-pay.png";
+import tickmark from "../Image/tickmark.svg";
 
 function Appointment() {
   const location = useLocation();
   const navigate = useNavigate();
   const doctor = location.state?.doctor;
+
+  const loggedInUser = JSON.parse(localStorage.getItem("loggedInUser")) || null;
+
   const [selectedDate, setSelectedDate] = useState("");
   const [selectedTime, setSelectedTime] = useState("");
-  const [patientName, setPatientName] = useState("");
-  const [patientPhone, setPatientPhone] = useState("");
-  const [patientEmail, setPatientEmail] = useState("");
+  const [patientName, setPatientName] = useState(loggedInUser?.name || "");
+  const [patientPhone, setPatientPhone] = useState(loggedInUser?.phone || "");
+  const [patientEmail, setPatientEmail] = useState(loggedInUser?.email || "");
   const [appointmentType, setAppointmentType] = useState("In-Person");
   const [paymentMethod, setPaymentMethod] = useState("Cash");
   const [isConfirmed, setIsConfirmed] = useState(false);
@@ -47,7 +51,7 @@ function Appointment() {
     );
   }
 
-  const dates = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];
+  const dates = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
   const times = [
     "05:00 pm",
     "05:30 pm",
@@ -61,33 +65,17 @@ function Appointment() {
 
   const validateForm = () => {
     const newErrors = {};
-
-    if (!patientName.trim()) {
-      newErrors.patientName = "Full name is required";
-    } else if (patientName.length < 2) {
+    if (!patientName.trim()) newErrors.patientName = "Full name is required";
+    else if (patientName.length < 2)
       newErrors.patientName = "Name must be at least 2 characters";
-    }
-
-    if (!patientPhone) {
-      newErrors.patientPhone = "Phone number is required";
-    } else if (!/^\d{10}$/.test(patientPhone)) {
+    if (!patientPhone) newErrors.patientPhone = "Phone number is required";
+    else if (!/^\d{10}$/.test(patientPhone))
       newErrors.patientPhone = "Phone number must be exactly 10 digits";
-    }
-
-    if (!patientEmail) {
-      newErrors.patientEmail = "Email is required";
-    } else if (!/\S+@\S+\.\S+/.test(patientEmail)) {
+    if (!patientEmail) newErrors.patientEmail = "Email is required";
+    else if (!/\S+@\S+\.\S+/.test(patientEmail))
       newErrors.patientEmail = "Email is invalid";
-    }
-
-    if (!selectedDate) {
-      newErrors.selectedDate = "Please select a date";
-    }
-
-    if (!selectedTime) {
-      newErrors.selectedTime = "Please select a time";
-    }
-
+    if (!selectedDate) newErrors.selectedDate = "Please select a date";
+    if (!selectedTime) newErrors.selectedTime = "Please select a time";
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
   };
@@ -101,6 +89,19 @@ function Appointment() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+
+    if (!loggedInUser) {
+      Swal.fire({
+        title: "Please Login First",
+        text: "You need to be logged in to book an appointment.",
+        icon: "warning",
+        confirmButtonText: "Go to Login",
+      }).then(() => {
+        navigate("/login");
+      });
+      return;
+    }
+
     if (validateForm()) {
       const appointment = {
         doctorName: doctor.name,
@@ -130,9 +131,9 @@ function Appointment() {
   const resetForm = () => {
     setSelectedDate("");
     setSelectedTime("");
-    setPatientName("");
-    setPatientPhone("");
-    setPatientEmail("");
+    setPatientName(loggedInUser?.name || "");
+    setPatientPhone(loggedInUser?.phone || "");
+    setPatientEmail(loggedInUser?.email || "");
     setAppointmentType("In-Person");
     setPaymentMethod("Cash");
     setIsConfirmed(false);
@@ -141,7 +142,7 @@ function Appointment() {
 
   const handleClosePopup = () => {
     setIsConfirmed(false);
-    navigate("/Appointments");
+    navigate("/appointments");
   };
 
   return (
@@ -151,7 +152,7 @@ function Appointment() {
           <div className="bg-white rounded-lg shadow-xl w-full max-w-sm p-6">
             <button
               onClick={handleClosePopup}
-              className="absolute top-2 right-2 text-gray-600 hover:text-gray-800 focus:outline-none"
+              className="absolute top-2 right-2 text-gray-600 hover:text-gray-800"
             >
               <svg
                 className="w-6 h-6"
@@ -177,7 +178,7 @@ function Appointment() {
             <div className="flex flex-col sm:flex-row justify-center gap-4">
               <button
                 onClick={resetForm}
-                className="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition w-full sm:w-auto"
+                className="px-4 py-2 bg-[] text-white rounded-md hover:bg-[#2a7fba] transition w-full sm:w-auto"
               >
                 Book Another
               </button>
@@ -200,9 +201,9 @@ function Appointment() {
             src={doctor.image}
             alt={doctor.name}
           />
-          <div className="flex-1 border border-[#ADADAD] rounded-lg p-4 sm:p-8 bg-white">
+          <div className="flex-1 border border-gray-300 rounded-lg p-4 sm:p-8 bg-white">
             <p className="flex items-center gap-2 text-2xl sm:text-3xl font-medium text-gray-700">
-              {doctor.name}{" "}
+              {doctor.name}
               <img className="w-5" src={tickmark} alt="Verified" />
             </p>
             <p className="text-gray-600 text-sm sm:text-base">
@@ -214,7 +215,6 @@ function Appointment() {
           </div>
         </div>
 
-        {/* Date & Time Selection */}
         <div className="mt-10">
           <h2 className="text-lg sm:text-xl font-semibold">
             Select Date & Time
@@ -261,7 +261,6 @@ function Appointment() {
           )}
         </div>
 
-        {/* Patient Details */}
         <div className="mt-6 text-center">
           <h2 className="text-lg font-semibold">Your Details</h2>
           <div className="mt-2">
@@ -270,14 +269,13 @@ function Appointment() {
               placeholder="Full Name"
               value={patientName}
               onChange={(e) => setPatientName(e.target.value)}
-              className="w-full max-w-md p-2 border rounded-md text-sm sm:text-base"
+              className="w-full max-w-md p-2 border rounded-md text-sm sm:text-base focus:outline-none focus:ring-2 focus:ring-blue-500"
               disabled={isConfirmed}
             />
             {errors.patientName && (
               <p className="text-red-500 text-sm mt-1">{errors.patientName}</p>
             )}
           </div>
-
           <div className="mt-4">
             <input
               type="tel"
@@ -285,21 +283,20 @@ function Appointment() {
               value={patientPhone}
               onChange={handlePhoneChange}
               maxLength="10"
-              className="w-full max-w-md p-2 border rounded-md text-sm sm:text-base"
+              className="w-full max-w-md p-2 border rounded-md text-sm sm:text-base focus:outline-none focus:ring-2 focus:ring-blue-500"
               disabled={isConfirmed}
             />
             {errors.patientPhone && (
               <p className="text-red-500 text-sm mt-1">{errors.patientPhone}</p>
             )}
           </div>
-
           <div className="mt-4">
             <input
               type="email"
               placeholder="Email"
               value={patientEmail}
               onChange={(e) => setPatientEmail(e.target.value)}
-              className="w-full max-w-md p-2 border rounded-md text-sm sm:text-base"
+              className="w-full max-w-md p-2 border rounded-md text-sm sm:text-base focus:outline-none focus:ring-2 focus:ring-blue-500"
               disabled={isConfirmed}
             />
             {errors.patientEmail && (
@@ -308,7 +305,6 @@ function Appointment() {
           </div>
         </div>
 
-        {/* Appointment Type */}
         <div className="text-center">
           <div className="mt-6">
             <h2 className="text-lg font-semibold">Appointment Type</h2>
@@ -337,8 +333,6 @@ function Appointment() {
               </label>
             </div>
           </div>
-
-          {/* Payment Method */}
           <div className="mt-6">
             <h2 className="text-lg font-semibold">Payment Method</h2>
             <div className="flex flex-row flex-wrap sm:flex-row gap-4 mt-2 justify-center">
@@ -363,21 +357,20 @@ function Appointment() {
                   className="mr-2"
                   disabled={isConfirmed}
                 />
-                <img src={gpayIcon} alt="G-Pay" className="w-10 h-8 mr-2" />
+                <img src={gpay} alt="G-Pay" className="w-10 h-8 mr-2" />
                 G-Pay
               </label>
             </div>
           </div>
         </div>
 
-        {/* Submit Button */}
         <div className="mt-6 text-center">
           <button
             type="submit"
             className={`mb-6 w-full max-w-xs py-3 rounded-md text-white text-sm sm:text-base ${
               isFormValid && !isConfirmed
-                ? "bg-[#2a7fba] hover:bg-[#2a628a]"
-                : "bg-gray-400 cursor-not-allowed"
+                ? "bg-[#2a7fba] hover:bg-[#2a7fba]"
+                : "bg-[#2a7fba] cursor-not-allowed"
             }`}
             disabled={!isFormValid || isConfirmed}
           >

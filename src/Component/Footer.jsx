@@ -1,7 +1,10 @@
 import React from "react";
 import img1 from "../Image/navbarlogo.svg";
+import { useNavigate } from "react-router-dom";
 
 function Footer() {
+  const navigate = useNavigate();
+
   return (
     <footer className="bg-white text-gray-700 py-10 ">
       <div className="max-w-screen-xl mx-auto px-6 md:px-12 grid grid-cols-1 md:grid-cols-3 gap-9">
@@ -25,12 +28,18 @@ function Footer() {
               </p>
             </li>
             <li>
-              <p to="/about" className="hover:text-[#2a7fba]">
+              <p
+                className="hover:text-[#2a7fba]"
+                onClick={() => navigate("/about")}
+              >
                 About us
               </p>
             </li>
             <li>
-              <p to="/delivery" className="hover:text-[#2a7fba]">
+              <p
+                className="hover:text-[#2a7fba]"
+                onClick={() => navigate("/contact")}
+              >
                 Delivery
               </p>
             </li>
@@ -47,10 +56,10 @@ function Footer() {
             GET IN TOUCH
           </h3>
           <p className="hover:text-[#2a7fba] text-sm text-gray-600">
-            <p to="/">+1 234-567-890</p>
+            <p>+1 234-567-890</p>
           </p>
           <p className="text-sm text-gray-600 hover:text-[#2a7fba]">
-         <p to="/">   example002@gmail.com</p>
+            <p> example002@gmail.com</p>
           </p>
         </div>
       </div>
