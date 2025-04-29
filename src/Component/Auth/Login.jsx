@@ -22,7 +22,6 @@ function Login() {
     );
 
     if (!userExists) {
-      // Email not found in registeredUsers, prompt to register
       Swal.fire({
         title: "Please Register First",
         text: "No account found with this email. Please register to continue.",
@@ -35,7 +34,6 @@ function Login() {
     }
 
     if (validUser) {
-      // Valid credentials, proceed with login
       localStorage.setItem("loggedInUser", JSON.stringify(validUser));
       Swal.fire({
         title: "Login Successful!",
@@ -62,7 +60,7 @@ function Login() {
               name="email"
               value={formData.email}
               onChange={handleChange}
-              className="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#2a7fba]"
               placeholder="Email"
             />
           </div>
@@ -72,7 +70,7 @@ function Login() {
               name="password"
               value={formData.password}
               onChange={handleChange}
-              className="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#2a7fba]"
               placeholder="Password"
             />
             <button
@@ -95,7 +93,7 @@ function Login() {
           {error && <p className="text-red-500 text-sm text-center mb-4">{error}</p>}
           <button
             type="submit"
-            className="w-full bg-[#2a7fba] text-white p-3 rounded-lg hover:bg-blue-700 transition"
+            className="w-full bg-[#2a7fba] text-white p-3 rounded-lg hover:bg-[#2a7fba] transition"
           >
             Login
           </button>
