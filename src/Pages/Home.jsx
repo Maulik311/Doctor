@@ -179,7 +179,7 @@ function Home() {
             schedule your appointment hassle-free.
           </p>
         </div>
-        <div className="mt-8 sm:mt-12 grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-2 sm:gap-8 max-w-5xl mx-auto">
+        <div className="mt-8 sm: mt-12 grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-2 sm:gap-8 max-w-5xl mx-auto">
           {specialities.map((speciality, index) => (
             <div
               key={index}
