@@ -15,10 +15,14 @@ function Login() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    const registeredUsers = JSON.parse(localStorage.getItem("registeredUsers")) || [];
-    const userExists = registeredUsers.find((user) => user.email === formData.email);
+    const registeredUsers =
+      JSON.parse(localStorage.getItem("registeredUsers")) || [];
+    const userExists = registeredUsers.find(
+      (user) => user.email === formData.email
+    );
     const validUser = registeredUsers.find(
-      (user) => user.email === formData.email && user.password === formData.password
+      (user) =>
+        user.email === formData.email && user.password === formData.password
     );
 
     if (!userExists) {
@@ -41,10 +45,9 @@ function Login() {
         icon: "success",
         confirmButtonText: "OK",
       }).then(() => {
-        navigate("/");
+        navigate("/dashboard"); // ✅ Changed to /dashboard (or your desired route)
       });
     } else {
-      // Email exists but password is incorrect
       setError("Invalid email or password");
     }
   };
@@ -52,7 +55,9 @@ function Login() {
   return (
     <div className="flex min-h-screen items-center justify-center bg-gray-100">
       <div className="w-full max-w-md bg-white p-8 rounded-lg shadow-lg">
-        <h2 className="text-2xl font-bold text-gray-800 mb-6 text-center">Login</h2>
+        <h2 className="text-2xl font-bold text-gray-800 mb-6 text-center">
+          Login
+        </h2>
         <form onSubmit={handleSubmit}>
           <div className="mb-4">
             <input
@@ -85,12 +90,14 @@ function Login() {
             <button
               type="button"
               className="text-[#2a7fba] hover:underline text-sm"
-              onClick={() => navigate("/forgot-password")}
+              onClick={() => navigate("/ForgotPassword")} // ✅ Standardized to /ForgotPassword
             >
               Forgot Password?
             </button>
           </div>
-          {error && <p className="text-red-500 text-sm text-center mb-4">{error}</p>}
+          {error && (
+            <p className="text-red-500 text-sm text-center mb-4">{error}</p>
+          )}
           <button
             type="submit"
             className="w-full bg-[#2a7fba] text-white p-3 rounded-lg hover:bg-[#2a7fba] transition"
@@ -102,7 +109,7 @@ function Login() {
           Don't have an account?{" "}
           <button
             onClick={() => navigate("/register")}
-            className="text[#2a7fba] hover:underline"
+            className="text-[#2a7fba] hover:underline"
           >
             Register
           </button>
